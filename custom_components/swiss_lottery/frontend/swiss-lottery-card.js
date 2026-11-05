@@ -234,7 +234,8 @@ class SwissLotteryCard extends HTMLElement {
         body += `<table class="ranks"><thead><tr><th>${esc(L(hass, "correct"))}</th><th>${esc(L(hass, "winners"))}</th><th>${esc(L(hass, "prize"))}</th></tr></thead><tbody>`;
         a.ranks.forEach((r) => {
           const prize = r.prize !== null && r.prize !== undefined ? fmtChf(r.prize, 2) : esc(r.prize_text || "");
-          body += `<tr class="${mine.has(r.rank) ? "mine" : ""}"><td>${esc(r.rank)}</td><td>${esc(r.winners ?? "")}</td><td>${prize}</td></tr>`;
+          const winners = r.winners === null || r.winners === undefined ? "" : fmtChf(r.winners, 0);
+          body += `<tr class="${mine.has(r.rank) ? "mine" : ""}"><td>${esc(r.rank)}</td><td>${winners}</td><td>${prize}</td></tr>`;
         });
         body += `</tbody></table>`;
       }

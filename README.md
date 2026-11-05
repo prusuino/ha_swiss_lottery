@@ -72,6 +72,8 @@ Replay, Joker and Super-Star are not checked automatically – their numbers are
 
 The integration ships a Lovelace card, **Swiss Lottery** (`custom:swiss-lottery-card`), with a visual editor: the drawn balls (bonus numbers in colour), the extra games, the jackpot and the next draw, and your tickets with the matched numbers highlighted and the prize rank next to a winning ticket. Optionally the full prize table of the draw.
 
+![The Swiss Lottery card for the three games: drawn balls with the lucky number, stars and dream number in colour, Joker, Replay and 2nd Chance, jackpot and next draw, two tickets each with the matched numbers highlighted and the prize of a winning ticket, and the prize table of the Swiss Lotto draw](docs/card-example.png)
+
 The card file is served by the integration, but registering it as a Lovelace resource is left to you – the resource list is part of your dashboard configuration. It is a one-time step:
 
 **Settings → Dashboards → ⋮ (top right) → Resources → + Add resource**
