@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swiss Lottery",
+        "description": "Shows the published results of a Swisslos game – the latest draw, the jackpot and the next draw – and checks your own tickets against them. Add the integration once per game.",
+        "data": {
+          "game": "Game",
+          "tickets": "Your tickets (optional, one per line)"
+        },
+        "data_description": {
+          "tickets": "Main numbers followed by the bonus number(s), for example «4 11 19 27 33 41 + 5» for Swiss Lotto (6 numbers + lucky number), «3 17 24 38 46 + 2 9» for EuroMillions (5 numbers + 2 stars) or «4 8 15 16 23 38 + 1» for EuroDreams (6 numbers + dream number). Commas work too; without a «+» the last number(s) count as the bonus. Tickets can be changed later under Configure."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "swisslos.ch could not be reached. Check the internet connection and try again.",
+      "invalid_page": "The results page of swisslos.ch does not have the expected structure. The integration may need an update.",
+      "ticket_empty": "Empty ticket line.",
+      "ticket_count": "Ticket «{line}» has the wrong number of picks for this game.",
+      "ticket_duplicate": "Ticket «{line}» contains the same number twice.",
+      "ticket_range": "Ticket «{line}» contains a number outside the allowed range.",
+      "ticket_too_many": "At most {line} tickets per game."
+    },
+    "abort": {
+      "already_configured": "This game is already set up. Change its tickets under Configure."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tickets – {game}",
+        "description": "One ticket per line: the main numbers, then «+» and the bonus number(s). Leave empty to track the draws without tickets.",
+        "data": {
+          "tickets": "Your tickets"
+        }
+      }
+    },
+    "error": {
+      "ticket_empty": "Empty ticket line.",
+      "ticket_count": "Ticket «{line}» has the wrong number of picks for this game.",
+      "ticket_duplicate": "Ticket «{line}» contains the same number twice.",
+      "ticket_range": "Ticket «{line}» contains a number outside the allowed range.",
+      "ticket_too_many": "At most {line} tickets per game."
+    }
+  },
+  "selector": {
+    "game": {
+      "options": {
+        "swisslotto": "Swiss Lotto (6 of 42 + lucky number, Wednesday and Saturday)",
+        "euromillions": "EuroMillions (5 of 50 + 2 stars, Tuesday and Friday)",
+        "eurodreams": "EuroDreams (6 of 40 + dream number, Monday and Thursday)"
+      }
+    }
+  }
+}

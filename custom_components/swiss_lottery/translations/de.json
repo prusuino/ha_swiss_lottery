@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swiss Lottery",
+        "description": "Zeigt die veröffentlichten Ergebnisse eines Swisslos-Spiels – letzte Ziehung, Jackpot und nächste Ziehung – und prüft deine eigenen Tipps dagegen. Die Integration wird pro Spiel einmal hinzugefügt.",
+        "data": {
+          "game": "Spiel",
+          "tickets": "Deine Tipps (optional, einer pro Zeile)"
+        },
+        "data_description": {
+          "tickets": "Zuerst die Hauptzahlen, dann die Zusatzzahl(en), zum Beispiel «4 11 19 27 33 41 + 5» für Swiss Lotto (6 Zahlen + Glückszahl), «3 17 24 38 46 + 2 9» für EuroMillions (5 Zahlen + 2 Sterne) oder «4 8 15 16 23 38 + 1» für EuroDreams (6 Zahlen + Dream-Zahl). Kommas gehen auch; ohne «+» zählen die letzten Zahlen als Zusatzzahlen. Die Tipps lassen sich später unter «Konfigurieren» ändern."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "swisslos.ch ist nicht erreichbar. Internetverbindung prüfen und erneut versuchen.",
+      "invalid_page": "Die Ergebnisseite von swisslos.ch hat nicht die erwartete Struktur. Die Integration braucht womöglich ein Update.",
+      "ticket_empty": "Leere Tipp-Zeile.",
+      "ticket_count": "Tipp «{line}» hat für dieses Spiel die falsche Anzahl Zahlen.",
+      "ticket_duplicate": "Tipp «{line}» enthält eine Zahl doppelt.",
+      "ticket_range": "Tipp «{line}» enthält eine Zahl ausserhalb des erlaubten Bereichs.",
+      "ticket_too_many": "Höchstens {line} Tipps pro Spiel."
+    },
+    "abort": {
+      "already_configured": "Dieses Spiel ist bereits eingerichtet. Die Tipps änderst du unter «Konfigurieren»."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Tipps – {game}",
+        "description": "Ein Tipp pro Zeile: die Hauptzahlen, dann «+» und die Zusatzzahl(en). Leer lassen, um nur die Ziehungen zu verfolgen.",
+        "data": {
+          "tickets": "Deine Tipps"
+        }
+      }
+    },
+    "error": {
+      "ticket_empty": "Leere Tipp-Zeile.",
+      "ticket_count": "Tipp «{line}» hat für dieses Spiel die falsche Anzahl Zahlen.",
+      "ticket_duplicate": "Tipp «{line}» enthält eine Zahl doppelt.",
+      "ticket_range": "Tipp «{line}» enthält eine Zahl ausserhalb des erlaubten Bereichs.",
+      "ticket_too_many": "Höchstens {line} Tipps pro Spiel."
+    }
+  },
+  "selector": {
+    "game": {
+      "options": {
+        "swisslotto": "Swiss Lotto (6 aus 42 + Glückszahl, Mittwoch und Samstag)",
+        "euromillions": "EuroMillions (5 aus 50 + 2 Sterne, Dienstag und Freitag)",
+        "eurodreams": "EuroDreams (6 aus 40 + Dream-Zahl, Montag und Donnerstag)"
+      }
+    }
+  }
+}

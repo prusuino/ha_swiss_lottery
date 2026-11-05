@@ -1,0 +1,7 @@
+{
+  "name": "Swiss Lottery (Swisslos)",
+  "zip_release": true,
+  "filename": "swiss_lottery.zip",
+  "render_readme": true,
+  "homeassistant": "2025.4.0"
+}

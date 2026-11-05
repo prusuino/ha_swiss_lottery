@@ -1,0 +1,13 @@
+{
+  "domain": "swiss_lottery",
+  "name": "Swiss Lottery (Swisslos)",
+  "codeowners": ["@prusuino"],
+  "config_flow": true,
+  "dependencies": ["http"],
+  "documentation": "https://github.com/prusuino/ha_swiss_lottery",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/prusuino/ha_swiss_lottery/issues",
+  "requirements": [],
+  "version": "0.1.0"
+}

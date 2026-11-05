@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swiss Lottery",
+        "description": "Affiche les résultats publiés d’un jeu Swisslos – dernier tirage, jackpot et prochain tirage – et vérifie vos propres grilles. Ajoutez l’intégration une fois par jeu.",
+        "data": {
+          "game": "Jeu",
+          "tickets": "Vos grilles (facultatif, une par ligne)"
+        },
+        "data_description": {
+          "tickets": "D’abord les numéros principaux, puis le ou les numéros complémentaires, par exemple «4 11 19 27 33 41 + 5» pour Swiss Lotto (6 numéros + numéro chance), «3 17 24 38 46 + 2 9» pour EuroMillions (5 numéros + 2 étoiles) ou «4 8 15 16 23 38 + 1» pour EuroDreams (6 numéros + numéro Dream). Les virgules fonctionnent aussi; sans «+», les derniers numéros comptent comme complémentaires. Les grilles se modifient ensuite sous «Configurer»."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "swisslos.ch est injoignable. Vérifiez la connexion Internet et réessayez.",
+      "invalid_page": "La page des résultats de swisslos.ch n’a pas la structure attendue. L’intégration a peut-être besoin d’une mise à jour.",
+      "ticket_empty": "Ligne de grille vide.",
+      "ticket_count": "La grille «{line}» n’a pas le bon nombre de numéros pour ce jeu.",
+      "ticket_duplicate": "La grille «{line}» contient deux fois le même numéro.",
+      "ticket_range": "La grille «{line}» contient un numéro hors de la plage autorisée.",
+      "ticket_too_many": "Au plus {line} grilles par jeu."
+    },
+    "abort": {
+      "already_configured": "Ce jeu est déjà configuré. Modifiez ses grilles sous «Configurer»."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Grilles – {game}",
+        "description": "Une grille par ligne: les numéros principaux, puis «+» et le ou les numéros complémentaires. Laissez vide pour suivre seulement les tirages.",
+        "data": {
+          "tickets": "Vos grilles"
+        }
+      }
+    },
+    "error": {
+      "ticket_empty": "Ligne de grille vide.",
+      "ticket_count": "La grille «{line}» n’a pas le bon nombre de numéros pour ce jeu.",
+      "ticket_duplicate": "La grille «{line}» contient deux fois le même numéro.",
+      "ticket_range": "La grille «{line}» contient un numéro hors de la plage autorisée.",
+      "ticket_too_many": "Au plus {line} grilles par jeu."
+    }
+  },
+  "selector": {
+    "game": {
+      "options": {
+        "swisslotto": "Swiss Lotto (6 sur 42 + numéro chance, mercredi et samedi)",
+        "euromillions": "EuroMillions (5 sur 50 + 2 étoiles, mardi et vendredi)",
+        "eurodreams": "EuroDreams (6 sur 40 + numéro Dream, lundi et jeudi)"
+      }
+    }
+  }
+}

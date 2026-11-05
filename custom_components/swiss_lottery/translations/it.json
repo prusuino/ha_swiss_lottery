@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Swiss Lottery",
+        "description": "Mostra i risultati pubblicati di un gioco Swisslos – ultima estrazione, jackpot e prossima estrazione – e verifica le tue schedine. Aggiungi l’integrazione una volta per gioco.",
+        "data": {
+          "game": "Gioco",
+          "tickets": "Le tue schedine (facoltativo, una per riga)"
+        },
+        "data_description": {
+          "tickets": "Prima i numeri principali, poi il numero o i numeri aggiuntivi, ad esempio «4 11 19 27 33 41 + 5» per Swiss Lotto (6 numeri + numero fortunato), «3 17 24 38 46 + 2 9» per EuroMillions (5 numeri + 2 stelle) o «4 8 15 16 23 38 + 1» per EuroDreams (6 numeri + numero Dream). Vanno bene anche le virgole; senza «+» gli ultimi numeri valgono come aggiuntivi. Le schedine si modificano in seguito sotto «Configura»."
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "swisslos.ch non è raggiungibile. Controlla la connessione Internet e riprova.",
+      "invalid_page": "La pagina dei risultati di swisslos.ch non ha la struttura prevista. L’integrazione potrebbe richiedere un aggiornamento.",
+      "ticket_empty": "Riga della schedina vuota.",
+      "ticket_count": "La schedina «{line}» ha un numero errato di numeri per questo gioco.",
+      "ticket_duplicate": "La schedina «{line}» contiene lo stesso numero due volte.",
+      "ticket_range": "La schedina «{line}» contiene un numero fuori dall’intervallo consentito.",
+      "ticket_too_many": "Al massimo {line} schedine per gioco."
+    },
+    "abort": {
+      "already_configured": "Questo gioco è già configurato. Modifica le schedine sotto «Configura»."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Schedine – {game}",
+        "description": "Una schedina per riga: i numeri principali, poi «+» e il numero o i numeri aggiuntivi. Lascia vuoto per seguire solo le estrazioni.",
+        "data": {
+          "tickets": "Le tue schedine"
+        }
+      }
+    },
+    "error": {
+      "ticket_empty": "Riga della schedina vuota.",
+      "ticket_count": "La schedina «{line}» ha un numero errato di numeri per questo gioco.",
+      "ticket_duplicate": "La schedina «{line}» contiene lo stesso numero due volte.",
+      "ticket_range": "La schedina «{line}» contiene un numero fuori dall’intervallo consentito.",
+      "ticket_too_many": "Al massimo {line} schedine per gioco."
+    }
+  },
+  "selector": {
+    "game": {
+      "options": {
+        "swisslotto": "Swiss Lotto (6 su 42 + numero fortunato, mercoledì e sabato)",
+        "euromillions": "EuroMillions (5 su 50 + 2 stelle, martedì e venerdì)",
+        "eurodreams": "EuroDreams (6 su 40 + numero Dream, lunedì e giovedì)"
+      }
+    }
+  }
+}
