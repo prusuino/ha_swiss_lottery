@@ -16,7 +16,6 @@
     "error": {
       "cannot_connect": "swisslos.ch ist nicht erreichbar. Internetverbindung prüfen und erneut versuchen.",
       "invalid_page": "Die Ergebnisseite von swisslos.ch hat nicht die erwartete Struktur. Die Integration braucht womöglich ein Update.",
-      "ticket_empty": "Leere Tipp-Zeile.",
       "ticket_count": "Tipp «{line}» hat für dieses Spiel die falsche Anzahl Zahlen.",
       "ticket_duplicate": "Tipp «{line}» enthält eine Zahl doppelt.",
       "ticket_range": "Tipp «{line}» enthält eine Zahl ausserhalb des erlaubten Bereichs.",
@@ -37,7 +36,6 @@
       }
     },
     "error": {
-      "ticket_empty": "Leere Tipp-Zeile.",
       "ticket_count": "Tipp «{line}» hat für dieses Spiel die falsche Anzahl Zahlen.",
       "ticket_duplicate": "Tipp «{line}» enthält eine Zahl doppelt.",
       "ticket_range": "Tipp «{line}» enthält eine Zahl ausserhalb des erlaubten Bereichs.",

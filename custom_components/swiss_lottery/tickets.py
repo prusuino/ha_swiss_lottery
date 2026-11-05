@@ -61,7 +61,7 @@ def parse_ticket(text: str, game: str) -> Ticket:
     n_main, max_main, n_bonus, max_bonus = GAME_RULES[game]
     line = text.strip()
     if not line:
-        raise TicketError("ticket_empty", line)
+        raise TicketError("ticket_count", line)
     parts = _SPLIT_RE.split(line, maxsplit=1)
     main_nums = [int(x) for x in _NUM_RE.findall(parts[0])]
     if len(parts) == 2:

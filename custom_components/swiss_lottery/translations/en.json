@@ -16,7 +16,6 @@
     "error": {
       "cannot_connect": "swisslos.ch could not be reached. Check the internet connection and try again.",
       "invalid_page": "The results page of swisslos.ch does not have the expected structure. The integration may need an update.",
-      "ticket_empty": "Empty ticket line.",
       "ticket_count": "Ticket «{line}» has the wrong number of picks for this game.",
       "ticket_duplicate": "Ticket «{line}» contains the same number twice.",
       "ticket_range": "Ticket «{line}» contains a number outside the allowed range.",
@@ -37,7 +36,6 @@
       }
     },
     "error": {
-      "ticket_empty": "Empty ticket line.",
       "ticket_count": "Ticket «{line}» has the wrong number of picks for this game.",
       "ticket_duplicate": "Ticket «{line}» contains the same number twice.",
       "ticket_range": "Ticket «{line}» contains a number outside the allowed range.",

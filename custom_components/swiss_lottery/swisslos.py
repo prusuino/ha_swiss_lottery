@@ -14,8 +14,9 @@ something wrong.
 """
 from __future__ import annotations
 
+import asyncio
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime
 from html.parser import HTMLParser
 
@@ -366,7 +367,11 @@ def parse_results(html: str, games: tuple[str, ...] | None = None) -> dict[str, 
 async def async_fetch_results(
     session: aiohttp.ClientSession, games: tuple[str, ...] | None = None
 ) -> dict[str, DrawResult]:
-    """Download the results page once and parse the requested games."""
+    """Download the results page once and parse the requested games.
+
+    Parsing ~90 KB of HTML takes tens of milliseconds, so it runs in the
+    default executor rather than on the event loop.
+    """
     try:
         async with session.get(
             SWISSLOS_RESULTS_URL,
@@ -380,7 +385,7 @@ async def async_fetch_results(
         raise SwisslosCommunicationError("timeout") from err
     except aiohttp.ClientError as err:
         raise SwisslosCommunicationError(type(err).__name__) from err
-    return parse_results(html, games)
+    return await asyncio.get_running_loop().run_in_executor(None, parse_results, html, games)
 
 
 def next_draw_datetime(result: DrawResult, tzinfo) -> datetime | None:

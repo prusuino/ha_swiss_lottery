@@ -16,7 +16,6 @@
     "error": {
       "cannot_connect": "swisslos.ch est injoignable. Vérifiez la connexion Internet et réessayez.",
       "invalid_page": "La page des résultats de swisslos.ch n’a pas la structure attendue. L’intégration a peut-être besoin d’une mise à jour.",
-      "ticket_empty": "Ligne de grille vide.",
       "ticket_count": "La grille «{line}» n’a pas le bon nombre de numéros pour ce jeu.",
       "ticket_duplicate": "La grille «{line}» contient deux fois le même numéro.",
       "ticket_range": "La grille «{line}» contient un numéro hors de la plage autorisée.",
@@ -37,7 +36,6 @@
       }
     },
     "error": {
-      "ticket_empty": "Ligne de grille vide.",
       "ticket_count": "La grille «{line}» n’a pas le bon nombre de numéros pour ce jeu.",
       "ticket_duplicate": "La grille «{line}» contient deux fois le même numéro.",
       "ticket_range": "La grille «{line}» contient un numéro hors de la plage autorisée.",

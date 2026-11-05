@@ -37,11 +37,12 @@ BONUS_KIND = {GAME_SWISSLOTTO: "lucky", GAME_EUROMILLIONS: "stars", GAME_EURODRE
 def entry_tickets(entry: ConfigEntry) -> list[Ticket]:
     game = entry_game(entry)
     tickets: list[Ticket] = []
-    for line in entry.options.get(CONF_TICKETS, []):
+    for index, line in enumerate(entry.options.get(CONF_TICKETS, []), start=1):
         try:
             tickets.append(parse_ticket(line, game))
         except TicketError as err:
-            _LOGGER.warning("Ignoring ticket %r of %s: %s", line, GAME_NAMES[game], err.code)
+            # The line itself stays out of the log: it is the user's picks.
+            _LOGGER.warning("Ignoring ticket line %d of %s: %s", index, GAME_NAMES[game], err.code)
     return tickets
 
 
@@ -119,7 +120,9 @@ class _LotterySensor(CoordinatorEntity[SwisslosCoordinator], SensorEntity):
         self._attr_unique_id = f"{entry.entry_id}_{self.id_part}"
         self._attr_device_info = device_info(hass, entry)
         self._attr_attribution = ATTRIBUTION
-        # Suggested id only: existing entities keep theirs.
+        # Suggested id only: existing entities keep theirs. The game is the
+        # entry's unique id, so one entry per game exists and no suffix is
+        # needed to keep two entries apart.
         self.entity_id = f"sensor.{DOMAIN}_{self._game}_{self.id_part}"
 
     def _name(self, hass: HomeAssistant) -> str:
