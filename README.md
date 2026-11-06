@@ -189,7 +189,8 @@ triggers:
     options:
       threshold:
         type: above
-        value: 20000000
+        value:
+          number: 20000000
 ```
 
 ### Building it yourself
