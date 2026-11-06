@@ -217,7 +217,7 @@ automation:
 - A ticket's prize is the published quota of its rank for that draw. Swisslos may correct quotas after publication; the official result is the one Swisslos publishes.
 - If swisslos.ch is unreachable or changes its page layout, the entities become `unavailable` rather than showing stale numbers, and recover with the next successful refresh.
 - This integration is unofficial and not affiliated with, endorsed by, or supported by Swisslos. It only reads the results Swisslos publishes on its website.
-- **Download diagnostics** (entry menu under **Settings → Devices & services**) gives the entry's configuration, what the integration last fetched and the current state of its entities, with coordinates and credentials redacted — attach it to an issue report when something looks wrong.
+- **Download diagnostics** (entry menu under **Settings → Devices & services**) gives the entry's configuration, what the integration last fetched and the current state of its entities, with coordinates, credentials and the entry's title and unique id redacted. Entity ids and names stay readable and can contain a place or stop name, so look through the file before attaching it to a public issue.
 
 ## Data source & license
 
