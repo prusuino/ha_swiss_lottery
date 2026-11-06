@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.0 — 2026-11-06
+
+- **New: diagnostics download.** The entry menu under **Settings → Devices & services** offers *Download diagnostics*: the entry's configuration, what was last fetched and the current state of its entities, with coordinates, credentials and other personal values redacted and long lists cut. Attach it to an issue report.
+
 ## 0.3.0 — 2026-11-06
 
 - **New: triggers and conditions in the automation editor** (Home Assistant 2026.10 / 2026.11 or newer). *A ticket has won*, *A draw was published* and *Jackpot crossed a threshold* (an amount in CHF or a CHF entity) appear in the trigger list, *A ticket has won* and *No ticket has won* in the condition list, in all four languages. Each targets the integration's own entities; the usual *for* and behaviour options apply. On older versions the entries are simply not offered.
