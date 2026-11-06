@@ -50,5 +50,72 @@
         "eurodreams": "EuroDreams (6 su 40 + numero Dream, lunedì e giovedì)"
       }
     }
+  },
+  "triggers": {
+    "ticket_won": {
+      "name": "Una schedina ha vinto",
+      "description": "Si attiva quando l'ultima estrazione paga almeno una delle tue schedine. Le schedine vincenti con rango e premio sono attributi del sensore di vincita.",
+      "fields": {
+        "behavior": {
+          "name": "Attiva quando"
+        },
+        "for": {
+          "name": "Per almeno"
+        }
+      }
+    },
+    "draw_published": {
+      "name": "È stata pubblicata un'estrazione",
+      "description": "Si attiva quando Swisslos pubblica una nuova estrazione del gioco (la data dell'estrazione cambia).",
+      "fields": {
+        "behavior": {
+          "name": "Attiva quando"
+        },
+        "for": {
+          "name": "Per almeno"
+        }
+      }
+    },
+    "jackpot_crossed_threshold": {
+      "name": "Il jackpot ha superato una soglia",
+      "description": "Si attiva quando il jackpot della prossima estrazione supera o scende sotto l'importo configurato in CHF.",
+      "fields": {
+        "behavior": {
+          "name": "Attiva quando"
+        },
+        "for": {
+          "name": "Per almeno"
+        },
+        "threshold": {
+          "name": "Jackpot"
+        }
+      }
+    }
+  },
+  "conditions": {
+    "ticket_has_won": {
+      "name": "Una schedina ha vinto",
+      "description": "Verifica se l'ultima estrazione paga almeno una delle tue schedine.",
+      "fields": {
+        "behavior": {
+          "name": "Condizione soddisfatta se"
+        },
+        "for": {
+          "name": "Per almeno"
+        }
+      }
+    },
+    "no_ticket_has_won": {
+      "name": "Nessuna schedina ha vinto",
+      "description": "Verifica che nessuna delle tue schedine abbia vinto nell'ultima estrazione.",
+      "fields": {
+        "behavior": {
+          "name": "Condizione soddisfatta se"
+        },
+        "for": {
+          "name": "Per almeno"
+        }
+      }
+    }
   }
 }

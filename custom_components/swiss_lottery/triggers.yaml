@@ -1,0 +1,63 @@
+.trigger_common_fields: &trigger_common_fields
+  behavior:
+    required: true
+    default: each
+    selector:
+      automation_behavior:
+        mode: trigger
+  for:
+    required: true
+    default: 00:00:00
+    selector:
+      duration:
+
+ticket_won:
+  fields: *trigger_common_fields
+  target:
+    entity:
+      - integration: swiss_lottery
+        domain: binary_sensor
+
+draw_published:
+  fields: *trigger_common_fields
+  target:
+    entity:
+      - integration: swiss_lottery
+        domain: sensor
+        device_class: date
+
+jackpot_crossed_threshold:
+  fields:
+    behavior:
+      required: true
+      default: each
+      selector:
+        automation_behavior:
+          mode: trigger
+    for:
+      required: true
+      default: 00:00:00
+      selector:
+        duration:
+    threshold:
+      required: true
+      selector:
+        numeric_threshold:
+          mode: crossed
+          entity:
+            - domain: input_number
+              unit_of_measurement: "CHF"
+            - domain: number
+              unit_of_measurement: "CHF"
+            - domain: sensor
+              unit_of_measurement: "CHF"
+          number:
+            min: 0
+            step: any
+            mode: box
+            unit_of_measurement: "CHF"
+  target:
+    entity:
+      - integration: swiss_lottery
+        domain: sensor
+        device_class: monetary

@@ -1,0 +1,25 @@
+.condition_common_fields: &condition_common_fields
+  behavior:
+    required: true
+    default: any
+    selector:
+      automation_behavior:
+        mode: condition
+  for:
+    required: true
+    default: 00:00:00
+    selector:
+      duration:
+
+.win_target: &win_target
+  entity:
+    - integration: swiss_lottery
+      domain: binary_sensor
+
+ticket_has_won:
+  fields: *condition_common_fields
+  target: *win_target
+
+no_ticket_has_won:
+  fields: *condition_common_fields
+  target: *win_target

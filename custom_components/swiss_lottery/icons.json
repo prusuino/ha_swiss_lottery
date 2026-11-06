@@ -1,0 +1,21 @@
+{
+  "triggers": {
+    "ticket_won": {
+      "trigger": "mdi:trophy"
+    },
+    "draw_published": {
+      "trigger": "mdi:clover"
+    },
+    "jackpot_crossed_threshold": {
+      "trigger": "mdi:cash-multiple"
+    }
+  },
+  "conditions": {
+    "ticket_has_won": {
+      "condition": "mdi:trophy"
+    },
+    "no_ticket_has_won": {
+      "condition": "mdi:trophy-outline"
+    }
+  }
+}

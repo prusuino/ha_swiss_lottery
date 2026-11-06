@@ -50,5 +50,72 @@
         "eurodreams": "EuroDreams (6 of 40 + dream number, Monday and Thursday)"
       }
     }
+  },
+  "triggers": {
+    "ticket_won": {
+      "name": "A ticket has won",
+      "description": "Triggers when the latest draw pays out on at least one of your tickets. The winning tickets with rank and prize are attributes of the win sensor.",
+      "fields": {
+        "behavior": {
+          "name": "Trigger when"
+        },
+        "for": {
+          "name": "For at least"
+        }
+      }
+    },
+    "draw_published": {
+      "name": "A draw was published",
+      "description": "Triggers when Swisslos publishes a new draw of the game (the draw date changes).",
+      "fields": {
+        "behavior": {
+          "name": "Trigger when"
+        },
+        "for": {
+          "name": "For at least"
+        }
+      }
+    },
+    "jackpot_crossed_threshold": {
+      "name": "Jackpot crossed a threshold",
+      "description": "Triggers when the jackpot of the next draw crosses the configured amount in CHF.",
+      "fields": {
+        "behavior": {
+          "name": "Trigger when"
+        },
+        "for": {
+          "name": "For at least"
+        },
+        "threshold": {
+          "name": "Jackpot"
+        }
+      }
+    }
+  },
+  "conditions": {
+    "ticket_has_won": {
+      "name": "A ticket has won",
+      "description": "Tests if the latest draw pays out on at least one of your tickets.",
+      "fields": {
+        "behavior": {
+          "name": "Condition passes if"
+        },
+        "for": {
+          "name": "For at least"
+        }
+      }
+    },
+    "no_ticket_has_won": {
+      "name": "No ticket has won",
+      "description": "Tests if none of your tickets won the latest draw.",
+      "fields": {
+        "behavior": {
+          "name": "Condition passes if"
+        },
+        "for": {
+          "name": "For at least"
+        }
+      }
+    }
   }
 }

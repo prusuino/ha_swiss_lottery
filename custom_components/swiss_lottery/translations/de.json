@@ -50,5 +50,72 @@
         "eurodreams": "EuroDreams (6 aus 40 + Dream-Zahl, Montag und Donnerstag)"
       }
     }
+  },
+  "triggers": {
+    "ticket_won": {
+      "name": "Ein Tipp hat gewonnen",
+      "description": "Löst aus, wenn die letzte Ziehung auf mindestens einen deiner Tipps auszahlt. Die Gewinn-Tipps mit Rang und Gewinn sind Attribute des Gewinn-Sensors.",
+      "fields": {
+        "behavior": {
+          "name": "Auslösen wenn"
+        },
+        "for": {
+          "name": "Mindestens für"
+        }
+      }
+    },
+    "draw_published": {
+      "name": "Eine Ziehung wurde veröffentlicht",
+      "description": "Löst aus, wenn Swisslos eine neue Ziehung des Spiels veröffentlicht (das Ziehungsdatum ändert sich).",
+      "fields": {
+        "behavior": {
+          "name": "Auslösen wenn"
+        },
+        "for": {
+          "name": "Mindestens für"
+        }
+      }
+    },
+    "jackpot_crossed_threshold": {
+      "name": "Jackpot hat Schwelle überschritten",
+      "description": "Löst aus, wenn der Jackpot der nächsten Ziehung den eingestellten Betrag in CHF überschreitet oder unterschreitet.",
+      "fields": {
+        "behavior": {
+          "name": "Auslösen wenn"
+        },
+        "for": {
+          "name": "Mindestens für"
+        },
+        "threshold": {
+          "name": "Jackpot"
+        }
+      }
+    }
+  },
+  "conditions": {
+    "ticket_has_won": {
+      "name": "Ein Tipp hat gewonnen",
+      "description": "Prüft, ob die letzte Ziehung auf mindestens einen deiner Tipps auszahlt.",
+      "fields": {
+        "behavior": {
+          "name": "Bedingung erfüllt wenn"
+        },
+        "for": {
+          "name": "Mindestens für"
+        }
+      }
+    },
+    "no_ticket_has_won": {
+      "name": "Kein Tipp hat gewonnen",
+      "description": "Prüft, ob keiner deiner Tipps in der letzten Ziehung gewonnen hat.",
+      "fields": {
+        "behavior": {
+          "name": "Bedingung erfüllt wenn"
+        },
+        "for": {
+          "name": "Mindestens für"
+        }
+      }
+    }
   }
 }

@@ -95,24 +95,6 @@ show_extra: true        # Replay / Joker / Super-Star / 2nd Chance (default true
 show_ranks: false       # the prize table of the draw (default false)
 ```
 
-### Notification example
-
-```yaml
-automation:
-  - alias: Lottery win
-    triggers:
-      - trigger: state
-        entity_id: binary_sensor.swiss_lottery_swisslotto_win
-        to: "on"
-    actions:
-      - action: notify.mobile_app_phone
-        data:
-          title: Swiss Lotto
-          message: >-
-            {% set w = state_attr('binary_sensor.swiss_lottery_swisslotto_win', 'winning_tickets') %}
-            Ticket {{ w[0].ticket }} won: rank {{ w[0].rank }}, CHF {{ w[0].prize }}
-```
-
 ## Dashboard strategy
 
 The integration ships a **dashboard strategy**: a recipe Home Assistant renders in the browser, rather than a dashboard written into your configuration. Nothing is stored, nothing is overwritten, and the result follows your setup — add a game and its section appears on the next page load; remove one and it is gone.
@@ -176,6 +158,57 @@ views:
 That view is regenerated like the full dashboard is, so new config entries still appear by themselves, while every other view stays yours to edit. The same options work here too.
 
 > **Take control** (⋮ menu) turns a strategy dashboard into a static one you can edit card by card — but it is one-way: the dashboard stops following your config entries from then on. Prefer the two approaches above.
+
+## Automations
+
+### Blueprint: notify on a winning ticket
+
+The repository ships a blueprint that sends a notification to your phone when one of your tickets wins: the game, the draw date and, for every winning ticket, its number, prize rank and prize. Import it once, then create an automation from it and pick the win sensors of your games and your phone:
+
+[![Import blueprint](https://my.home-assistant.io/badges/blueprint_import.svg)](https://my.home-assistant.io/redirect/blueprint_import/?blueprint_url=https%3A%2F%2Fgithub.com%2Fprusuino%2Fha_swiss_lottery%2Fblob%2Fmain%2Fblueprints%2Fautomation%2Flottery_win_notification.yaml)
+
+An action field takes your own steps, a text-to-speech announcement for instance; the notification text is available there as `{{ message }}`.
+
+### Triggers and conditions in the automation editor
+
+On Home Assistant 2026.10 or newer the integration adds its own entries to the automation editor:
+
+| Trigger | Fires when |
+|---|---|
+| **A ticket has won** | the win sensor of a game switches on – the latest draw pays out on at least one of your tickets |
+| **A draw was published** | the draw date of a game changes – Swisslos has published a new draw |
+| **Jackpot crossed a threshold** | the jackpot of the next draw crosses an amount you set in CHF (or the value of a CHF entity) |
+
+On 2026.11 or newer there are also two conditions, **A ticket has won** and **No ticket has won**. Each entry targets the integration's own entities (pick an entity, the game's device or an area); the usual *for* duration and behaviour options apply.
+
+```yaml
+triggers:
+  - trigger: swiss_lottery.jackpot_crossed_threshold
+    target:
+      entity_id: sensor.swiss_lottery_swisslotto_jackpot
+    options:
+      threshold:
+        type: above
+        value: 20000000
+```
+
+### Building it yourself
+
+```yaml
+automation:
+  - alias: Lottery win
+    triggers:
+      - trigger: state
+        entity_id: binary_sensor.swiss_lottery_swisslotto_win
+        to: "on"
+    actions:
+      - action: notify.mobile_app_phone
+        data:
+          title: Swiss Lotto
+          message: >-
+            {% set w = state_attr('binary_sensor.swiss_lottery_swisslotto_win', 'winning_tickets') %}
+            Ticket {{ w[0].ticket }} won: rank {{ w[0].rank }}, CHF {{ w[0].prize }}
+```
 
 ## Notes
 

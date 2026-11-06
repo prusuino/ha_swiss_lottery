@@ -1,0 +1,64 @@
+blueprint:
+  name: Swiss Lottery – notify on a winning ticket
+  description: >-
+    Sends a notification to your phone when one of your tickets wins in the
+    latest draw: the game, the draw date and, for every winning ticket, its
+    number, prize rank and prize. Works for Swiss Lotto, EuroMillions and
+    EuroDreams alike – create one automation per game, or one with the win
+    sensors of all three.
+
+
+    Add your own steps in the action field, for example a text-to-speech
+    announcement; the text is available there as `{{ message }}`.
+  domain: automation
+  source_url: https://github.com/prusuino/ha_swiss_lottery/blob/main/blueprints/automation/lottery_win_notification.yaml
+  author: prusuino
+  homeassistant:
+    min_version: 2025.4.0
+  input:
+    win_sensors:
+      name: Win sensors
+      description: The win sensor of each game you want to be told about.
+      selector:
+        entity:
+          multiple: true
+          filter:
+            - integration: swiss_lottery
+              domain: binary_sensor
+    notify_device:
+      name: Phone
+      description: The phone (Home Assistant Companion app) that receives the notification.
+      selector:
+        device:
+          filter:
+            - integration: mobile_app
+    extra_actions:
+      name: Additional actions
+      description: Run after the notification. The notification text is available as `{{ message }}`.
+      default: []
+      selector:
+        action:
+
+mode: queued
+max_exceeded: silent
+
+triggers:
+  - trigger: state
+    entity_id: !input win_sensors
+    to: "on"
+
+variables:
+  notify_device: !input notify_device
+  game: "{{ device_attr(trigger.entity_id, 'name') or 'Swiss Lottery' }}"
+  draw_date: "{{ trigger.to_state.attributes.draw_date }}"
+  winning_tickets: "{{ trigger.to_state.attributes.winning_tickets or [] }}"
+  message: >-
+    {{ game }}, draw of {{ draw_date }}:
+    {% for t in winning_tickets %}ticket {{ t.ticket }} won – rank {{ t.rank }}, {{ t.prize_text or ('CHF ' ~ t.prize) }}{{ '; ' if not loop.last }}{% endfor %}
+
+actions:
+  - action: "notify.mobile_app_{{ device_attr(notify_device, 'name') | slugify }}"
+    data:
+      title: "{{ game }}: a ticket won!"
+      message: "{{ message }}"
+  - sequence: !input extra_actions

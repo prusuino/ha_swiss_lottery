@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.0 — 2026-11-06
+
+- **New: triggers and conditions in the automation editor** (Home Assistant 2026.10 / 2026.11 or newer). *A ticket has won*, *A draw was published* and *Jackpot crossed a threshold* (an amount in CHF or a CHF entity) appear in the trigger list, *A ticket has won* and *No ticket has won* in the condition list, in all four languages. Each targets the integration's own entities; the usual *for* and behaviour options apply. On older versions the entries are simply not offered.
+- **New: a blueprint, *notify on a winning ticket*.** One-click import from the README: picks the win sensors of your games and your phone, and sends game, draw date and every winning ticket with rank and prize; an action field takes your own steps with the text as `{{ message }}`.
+
 ## 0.2.0 — 2026-11-06
 
 - **New: a dashboard strategy.** The card file now also registers `custom:swiss-lottery`, a recipe Home Assistant renders in the browser: one section per game with the Swiss Lottery card, the win sensor and the closing time of the next draw, generated live from your config entries — nothing is written into your dashboard configuration. The resource you registered for the card is all it needs. Pick *Swiss Lottery* under **Settings → Dashboards → + Add dashboard**, or fill a single view of your own dashboard with it; `title` and `max_columns` can be set under `strategy:`. The README has the details.
