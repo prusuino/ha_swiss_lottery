@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.0 — 2026-11-06
+
+- **New: a dashboard strategy.** The card file now also registers `custom:swiss-lottery`, a recipe Home Assistant renders in the browser: one section per game with the Swiss Lottery card, the win sensor and the closing time of the next draw, generated live from your config entries — nothing is written into your dashboard configuration. The resource you registered for the card is all it needs. Pick *Swiss Lottery* under **Settings → Dashboards → + Add dashboard**, or fill a single view of your own dashboard with it; `title` and `max_columns` can be set under `strategy:`. The README has the details.
+
 ## 0.1.1 — 2026-11-05
 
 - The results page is parsed in a worker thread instead of on the event loop (it is about 90 KB of HTML).

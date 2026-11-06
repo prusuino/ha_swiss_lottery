@@ -113,6 +113,70 @@ automation:
             Ticket {{ w[0].ticket }} won: rank {{ w[0].rank }}, CHF {{ w[0].prize }}
 ```
 
+## Dashboard strategy
+
+The integration ships a **dashboard strategy**: a recipe Home Assistant renders in the browser, rather than a dashboard written into your configuration. Nothing is stored, nothing is overwritten, and the result follows your setup — add a game and its section appears on the next page load; remove one and it is gone.
+
+The integration deliberately does not create or modify any dashboard on your behalf — your dashboards stay entirely under your own control.
+
+The strategy comes with the card: the resource registered [above](#dashboard-card) is all it needs, there is no second file.
+
+### Using the strategy
+
+1. **Settings → Dashboards → + Add dashboard → New dashboard from scratch**, give it a name.
+2. Open it, then **✏️ (edit) → ⋮ → Raw configuration editor**.
+3. Replace the entire content with:
+
+```yaml
+strategy:
+  type: custom:swiss-lottery
+views: []
+```
+
+4. Save.
+
+You get:
+
+- a **Draws** view — one section per game, in the order Swiss Lotto, EuroMillions, EuroDreams: the Swiss Lottery card with the drawn balls, the extra games, the jackpot, the next draw and your tickets, plus the win sensor and the closing time of the next draw as tiles. The prize table is left out; add the card yourself with `show_ranks: true` if you want it.
+
+The strategy also appears under **+ Add dashboard** as *Swiss Lottery*, which does the same thing without the raw editor.
+
+Everything the strategy produces is a normal Home Assistant dashboard built from standard cards. If you would rather arrange things yourself, the entities above are all you need — the strategy is an offer, not a requirement.
+
+### Adjusting the strategy
+
+A strategy dashboard has no card editor — the layout is generated fresh on every load. You still have two ways to shape it without giving that up:
+
+**Options.** Anything you add under `strategy:` is passed to the recipe:
+
+```yaml
+strategy:
+  type: custom:swiss-lottery
+  title: My title
+  max_columns: 3
+views: []
+```
+
+| Option | Effect |
+|---|---|
+| `title` | dashboard title |
+| `max_columns` | column count of the generated section views |
+
+**One view inside your own dashboard.** Instead of a separate dashboard, let the strategy fill a single view of one you already have. Open your dashboard's raw configuration editor and add a view:
+
+```yaml
+views:
+  - title: Home
+    # ... your own cards ...
+  - title: Swiss Lottery
+    strategy:
+      type: custom:swiss-lottery
+```
+
+That view is regenerated like the full dashboard is, so new config entries still appear by themselves, while every other view stays yours to edit. The same options work here too.
+
+> **Take control** (⋮ menu) turns a strategy dashboard into a static one you can edit card by card — but it is one-way: the dashboard stops following your config entries from then on. Prefer the two approaches above.
+
 ## Notes
 
 - The jackpot shown is the amount Swisslos publishes for the next draw. EuroDreams has no jackpot (its top prize is an annuity, shown as published text).
