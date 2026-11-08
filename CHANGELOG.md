@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1 — 2026-11-08
+
+- **Maintenance.** The integration now keeps its per-entry data in the config entry's runtime data, as the Home Assistant quality scale asks, and declares the **bronze** tier in its manifest. The README gained a removal section. A test suite (ticket parser, draw evaluation, config flow) runs on every push. No change to entities or configuration.
+
 ## 0.5.0 — 2026-11-08
 
 - **New: repair notices.** A notice under **Settings → Repairs** when swisslos.ch has not answered for three refreshes in a row, and another when the results page could not be read three times in a row, which means the page changed and the integration needs an update. Both clear themselves with the next successful refresh. In all four languages.

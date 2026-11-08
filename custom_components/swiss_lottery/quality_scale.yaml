@@ -20,15 +20,15 @@ rules:
     comment: No actions.
   docs-high-level-description: done
   docs-installation-instructions: done
-  docs-removal-instructions: todo
+  docs-removal-instructions: done
   entity-event-setup:
     status: done
     comment: Entities subscribe to the shared coordinator in async_added_to_hass.
   entity-unique-id: done
   has-entity-name: done
   runtime-data:
-    status: todo
-    comment: The shared coordinator lives in hass.data[DOMAIN].
+    status: done
+    comment: Each entry's runtime_data is the shared coordinator.
   test-before-configure: done
   test-before-setup: done
   unique-config-entry: done

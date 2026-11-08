@@ -18,8 +18,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import entity_registry as er
 
-from .const import DOMAIN
-from .coordinator import DATA_COORDINATOR
 
 REDACTED = "**REDACTED**"
 TO_REDACT = {"address", "lat", "latitude", "lon", "longitude", "matched", "matched_bonus", "tickets"}
@@ -80,7 +78,7 @@ def _coordinator_info(coordinator: Any) -> dict[str, Any]:
 
 def _coordinators(hass: HomeAssistant, entry: ConfigEntry) -> dict[str, Any]:
     # One shared coordinator serves every game entry.
-    return {"swisslos": hass.data.get(DOMAIN, {}).get(DATA_COORDINATOR)}
+    return {"swisslos": getattr(entry, "runtime_data", None)}
 
 
 async def async_get_config_entry_diagnostics(hass: HomeAssistant, entry: ConfigEntry) -> dict[str, Any]:

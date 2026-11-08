@@ -10,7 +10,7 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import ATTRIBUTION, DOMAIN
-from .coordinator import DATA_COORDINATOR, SwisslosCoordinator
+from .coordinator import SwisslosCoordinator
 from .device import device_info, entry_game
 from .localization import t
 from .sensor import entry_tickets, ticket_dict
@@ -20,7 +20,7 @@ from .tickets import Ticket
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    coordinator: SwisslosCoordinator = hass.data[DOMAIN][DATA_COORDINATOR]
+    coordinator: SwisslosCoordinator = entry.runtime_data
     async_add_entities([WinBinarySensor(hass, coordinator, entry, entry_tickets(entry))])
 
 

@@ -23,7 +23,7 @@ from .const import (
     GAME_NAMES,
     GAME_SWISSLOTTO,
 )
-from .coordinator import DATA_COORDINATOR, SwisslosCoordinator
+from .coordinator import SwisslosCoordinator
 from .device import device_info, entry_game
 from .localization import t
 from .swisslos import DrawResult, PrizeTier, next_draw_datetime
@@ -69,7 +69,7 @@ def ticket_dict(ticket: Ticket, result: DrawResult) -> dict[str, Any]:
 async def async_setup_entry(
     hass: HomeAssistant, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
-    coordinator: SwisslosCoordinator = hass.data[DOMAIN][DATA_COORDINATOR]
+    coordinator: SwisslosCoordinator = entry.runtime_data
     game = entry_game(entry)
     tickets = entry_tickets(entry)
 

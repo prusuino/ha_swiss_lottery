@@ -8,7 +8,10 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from .const import DOMAIN
-from .coordinator import DATA_ENTRIES, get_coordinator, release_coordinator
+from .coordinator import DATA_ENTRIES, SwisslosCoordinator, get_coordinator, release_coordinator
+
+# Every game entry shares the one coordinator; runtime_data points at it.
+type SwissLotteryConfigEntry = ConfigEntry[SwisslosCoordinator]
 from .frontend import async_serve_card
 
 _LOGGER = logging.getLogger(__name__)
@@ -16,13 +19,14 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["binary_sensor", "sensor"]
 
 
-async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, entry: SwissLotteryConfigEntry) -> bool:
     coordinator = get_coordinator(hass)
     if coordinator.data is None:
         await coordinator.async_refresh()
         if not coordinator.last_update_success:
             raise ConfigEntryNotReady(str(coordinator.last_exception))
     hass.data[DOMAIN][DATA_ENTRIES].add(entry.entry_id)
+    entry.runtime_data = coordinator
 
     await async_serve_card(hass, entry)
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)

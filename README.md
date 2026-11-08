@@ -68,6 +68,11 @@ The results are refreshed once an hour. Draws take place in the evening – Swis
 
 Replay, Joker and Super-Star are not checked automatically – their numbers are shown, and whether your Joker matches is a glance at the Joker sensor.
 
+## Removal
+
+1. **Settings → Devices & services → Swiss Lottery**, open the entry's menu (⋮) and choose **Delete**; repeat for every game. The entities, their history and the device go with the entry. Your tickets are stored only in the entry and vanish with it.
+2. Remove the integration itself in the **Marketplace** (or HACS), then restart Home Assistant. With a manual installation, delete `custom_components/swiss_lottery` instead.
+
 ## Dashboard card
 
 The integration ships a Lovelace card, **Swiss Lottery** (`custom:swiss-lottery-card`), with a visual editor: the drawn balls (bonus numbers in colour), the extra games, the jackpot and the next draw, and your tickets with the matched numbers highlighted and the prize rank next to a winning ticket. Optionally the full prize table of the draw.
