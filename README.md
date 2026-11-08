@@ -216,6 +216,10 @@ automation:
             Ticket {{ w[0].ticket }} won: rank {{ w[0].rank }}, CHF {{ w[0].prize }}
 ```
 
+## Quality scale
+
+The integration declares **Bronze** on the [Home Assistant integration quality scale](https://developers.home-assistant.io/docs/core/integration-quality-scale/): a config flow with tests, unique ids for every entity, brand images, installation and removal instructions, a connection check before an entry is created, no duplicate entries, runtime data on the config entry, and the other Bronze rules. The tier is self-assessed, as it is for every custom integration; the per-rule status, including what is still open for Silver and Gold, is in `custom_components/swiss_lottery/quality_scale.yaml`.
+
 ## Notes
 
 - **Repairs.** When swisslos.ch has not answered for three refreshes in a row, or when its results page could not be read three times (the page changed and the integration needs an update), a notice appears under **Settings → Repairs**; it disappears on its own with the next successful refresh.
