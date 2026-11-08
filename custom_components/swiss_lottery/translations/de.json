@@ -117,5 +117,15 @@
         }
       }
     }
+  },
+  "issues": {
+    "unreachable": {
+      "title": "Swiss Lottery: Datendienst nicht erreichbar",
+      "description": "Der Dienst unter {host} hat mehrere Aktualisierungen in Folge nicht beantwortet. Prüfe deine Internetverbindung; ist sie in Ordnung, ist der Dienst selbst gestört. Die Entitäten bleiben bis dahin nicht verfügbar und erholen sich von selbst; dieser Hinweis verschwindet mit der nächsten erfolgreichen Aktualisierung."
+    },
+    "page_changed": {
+      "title": "Swiss Lottery: swisslos.ch-Seite nicht verstanden",
+      "description": "Die Ergebnisseite von swisslos.ch konnte mehrere Aktualisierungen in Folge nicht gelesen werden ({error}). Swisslos hat die Seite wahrscheinlich geändert; die Integration braucht ein Update, um zu folgen. Die Ziehungs-Entitäten behalten bis dahin ihre letzten Werte. Prüfe im Marketplace, ob eine neuere Version von Swiss Lottery vorliegt, oder melde das Problem auf GitHub; dieser Hinweis verschwindet mit der nächsten erfolgreichen Aktualisierung."
+    }
   }
 }

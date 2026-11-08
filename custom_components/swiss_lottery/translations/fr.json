@@ -117,5 +117,15 @@
         }
       }
     }
+  },
+  "issues": {
+    "unreachable": {
+      "title": "Swiss Lottery : service de données injoignable",
+      "description": "Le service à l'adresse {host} n'a pas répondu lors de plusieurs actualisations consécutives. Vérifie ta connexion internet ; si elle fonctionne, le service lui-même est en panne. Les entités restent indisponibles jusque-là et se rétablissent d'elles-mêmes ; cet avis disparaît à la prochaine actualisation réussie."
+    },
+    "page_changed": {
+      "title": "Swiss Lottery : page swisslos.ch incomprise",
+      "description": "La page des résultats de swisslos.ch n'a pas pu être lue lors de plusieurs actualisations consécutives ({error}). Swisslos a probablement modifié la page ; l'intégration a besoin d'une mise à jour pour suivre. Les entités de tirage conservent leurs dernières valeurs jusque-là. Vérifie dans le Marketplace s'il existe une version plus récente de Swiss Lottery ou signale le problème sur GitHub ; cet avis disparaît à la prochaine actualisation réussie."
+    }
   }
 }

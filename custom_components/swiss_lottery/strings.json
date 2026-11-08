@@ -117,5 +117,15 @@
         }
       }
     }
+  },
+  "issues": {
+    "unreachable": {
+      "title": "Swiss Lottery: data service unreachable",
+      "description": "The service at {host} has not answered for several refreshes in a row. Check your internet connection; if it is fine, the service itself is down. The entities stay unavailable until then and recover on their own; this notice disappears with the next successful refresh."
+    },
+    "page_changed": {
+      "title": "Swiss Lottery: swisslos.ch page not understood",
+      "description": "The results page of swisslos.ch could not be read for several refreshes in a row ({error}). Swisslos has most likely changed the page; the integration needs an update to follow. The draw entities keep their last values until then. Check the Marketplace for a newer version of Swiss Lottery or report the problem on GitHub; this notice disappears with the next successful refresh."
+    }
   }
 }

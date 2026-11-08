@@ -213,6 +213,7 @@ automation:
 
 ## Notes
 
+- **Repairs.** When swisslos.ch has not answered for three refreshes in a row, or when its results page could not be read three times (the page changed and the integration needs an update), a notice appears under **Settings → Repairs**; it disappears on its own with the next successful refresh.
 - The jackpot shown is the amount Swisslos publishes for the next draw. EuroDreams has no jackpot (its top prize is an annuity, shown as published text).
 - A ticket's prize is the published quota of its rank for that draw. Swisslos may correct quotas after publication; the official result is the one Swisslos publishes.
 - If swisslos.ch is unreachable or changes its page layout, the entities become `unavailable` rather than showing stale numbers, and recover with the next successful refresh.

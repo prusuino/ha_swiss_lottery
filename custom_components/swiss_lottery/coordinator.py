@@ -15,6 +15,11 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, Upda
 
 from . import swisslos
 from .const import DOMAIN, UPDATE_INTERVAL_SECONDS
+from .issues import IssueReporter, async_clear_entry_issues
+
+# The coordinator is shared by every entry, so its issues carry this id
+# instead of an entry id; they are withdrawn when the last entry goes.
+SHARED_ISSUE_OWNER = "shared"
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -33,14 +38,22 @@ class SwisslosCoordinator(DataUpdateCoordinator[dict[str, swisslos.DrawResult]])
             config_entry=None,  # shared by every entry on purpose
             update_interval=timedelta(seconds=UPDATE_INTERVAL_SECONDS),
         )
+        self.issues = IssueReporter(hass, SHARED_ISSUE_OWNER)
 
     async def _async_update_data(self) -> dict[str, swisslos.DrawResult]:
         try:
-            return await swisslos.async_fetch_results(async_get_clientsession(self.hass))
+            results = await swisslos.async_fetch_results(async_get_clientsession(self.hass))
         except swisslos.SwisslosCommunicationError as err:
+            self.issues.failure("unreachable", {"host": "swisslos.ch"})
             raise UpdateFailed(f"swisslos.ch unreachable: {err}") from err
         except swisslos.SwisslosParseError as err:
+            # The page changed: that does not fix itself, an update of the
+            # integration is needed. Three times in a row rules out a glitch.
+            self.issues.failure("page_changed", {"error": str(err)})
             raise UpdateFailed(f"swisslos.ch page not understood: {err}") from err
+        self.issues.clear("unreachable")
+        self.issues.clear("page_changed")
+        return results
 
 
 def get_coordinator(hass: HomeAssistant) -> SwisslosCoordinator:
@@ -62,3 +75,4 @@ def release_coordinator(hass: HomeAssistant, entry_id: str) -> None:
     store.get(DATA_ENTRIES, set()).discard(entry_id)
     if not store.get(DATA_ENTRIES):
         hass.data.pop(DOMAIN, None)
+        async_clear_entry_issues(hass, SHARED_ISSUE_OWNER)
