@@ -1,3 +1,5 @@
+import json
+from pathlib import Path
 """Constants for the Swiss Lottery integration."""
 DOMAIN = "swiss_lottery"
 
@@ -38,3 +40,7 @@ UPDATE_INTERVAL_SECONDS = 3600
 
 ATTRIBUTION = "Source: Swisslos (swisslos.ch)"
 CONFIGURATION_URL = "https://www.swisslos.ch"
+
+# The integration's own version, shown on the service card. Read from the
+# manifest so that a release never needs to touch two places.
+VERSION: str = json.loads((Path(__file__).parent / "manifest.json").read_text(encoding="utf-8"))["version"]

@@ -5,7 +5,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
 
-from .const import CONF_GAME, CONFIGURATION_URL, DOMAIN, GAME_NAMES, GAME_SWISSLOTTO
+from .const import CONF_GAME, CONFIGURATION_URL, DOMAIN, GAME_NAMES, GAME_SWISSLOTTO, VERSION
 from .localization import t
 
 
@@ -17,6 +17,7 @@ def device_info(hass: HomeAssistant, entry: ConfigEntry) -> DeviceInfo:
     game = entry_game(entry)
     return DeviceInfo(
         identifiers={(DOMAIN, entry.entry_id)},
+        sw_version=VERSION,
         name=GAME_NAMES[game],
         manufacturer=t("manufacturer", hass),
         model=t("model", hass),
