@@ -124,8 +124,10 @@ const STYLE = `
   .empty { color: var(--secondary-text-color); font-size: 0.9em; padding: 6px 0; }
 `;
 
+const BONUS_KINDS = ["lucky", "stars", "dream"];
+
 function ball(n, cls) {
-  return `<span class="ball ${cls || ""}">${esc(n)}</span>`;
+  return `<span class="ball ${esc(cls || "")}">${esc(n)}</span>`;
 }
 
 class SwissLotteryCard extends HTMLElement {
@@ -177,7 +179,8 @@ class SwissLotteryCard extends HTMLElement {
     if (!st || st.state === "unavailable" || st.state === "unknown" || !Array.isArray(a.numbers)) {
       body = `<div class="empty">${esc(L(hass, "unavailable"))}</div>`;
     } else {
-      const kind = a.bonus_kind || "lucky";
+      // The card accepts any entity, so attribute values are never trusted.
+      const kind = BONUS_KINDS.includes(a.bonus_kind) ? a.bonus_kind : "lucky";
       const main = a.numbers.map((n) => ball(n)).join("");
       const bonus = (a.bonus || []).map((n) => ball(n, `bonus ${kind}`)).join("");
       body += `<div class="balls">${main}${bonus ? `<span class="sep"></span>${bonus}` : ""}</div>`;
@@ -221,7 +224,9 @@ class SwissLotteryCard extends HTMLElement {
               const prize = tk.prize !== null && tk.prize !== undefined ? `CHF ${fmtChf(tk.prize, 2)}` : esc(tk.prize_text || "");
               result = `🏆 ${esc(tk.rank || "")} · ${prize}`;
             } else {
-              result = `${tk.matches}${tk.bonus_matches ? `+${tk.bonus_matches}` : ""} · ${esc(L(hass, "no_win"))}`;
+              const matches = Number(tk.matches) || 0;
+              const bonusMatches = Number(tk.bonus_matches) || 0;
+              result = `${matches}${bonusMatches ? `+${bonusMatches}` : ""} · ${esc(L(hass, "no_win"))}`;
             }
             body += `<div class="ticket ${tk.won ? "won" : ""}"><span class="label">${esc(L(hass, "ticket"))} ${i + 1}</span>${mainBalls}${bonusBalls ? `<span class="sep" style="height:20px"></span>${bonusBalls}` : ""}<span class="result">${result}</span></div>`;
           });

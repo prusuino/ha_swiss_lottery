@@ -2,6 +2,7 @@
 
 ## 0.5.2 — 2026-11-09
 
+- **Card hardening.** The card escapes every attribute value it renders: the badge class of the bonus balls, the bonus kind (only `lucky`, `stars` and `dream` are accepted) and the match counts of a ticket, which are coerced to numbers. Found in the HACS review by @frenck (hacs/default #13449).
 - **Version on the service card.** The integration's version now appears on its service card under Settings → Devices & services, where the entities are listed.
 
 ## 0.5.1 — 2026-11-08
