@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.3 — 2026-11-09
+
+- **Listed in the Marketplace default catalog.** The README now leads with the Marketplace/HACS search and keeps the custom-repository steps as a fallback, as suggested by @frenck in the HACS review (hacs/default #13449).
+
 ## 0.5.2 — 2026-11-09
 
 - **Card hardening.** The card escapes every attribute value it renders: the badge class of the bonus balls, the bonus kind (only `lucky`, `stars` and `dream` are accepted) and the match counts of a ticket, which are coerced to numbers. Found in the HACS review by @frenck (hacs/default #13449).

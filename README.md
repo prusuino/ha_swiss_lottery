@@ -39,13 +39,15 @@ The results are refreshed once an hour. Draws take place in the evening – Swis
 
 ## Installation
 
-### Home Assistant Marketplace (custom repository)
+### Home Assistant Marketplace (recommended)
 
-1. Open **Settings → Marketplace → ⋮ → Custom repositories** (Home Assistant 2026.11 or newer; on older versions **HACS → ⋮ → Custom repositories**), add `https://github.com/prusuino/ha_swiss_lottery` with the category *Integration*, then download **Swiss Lottery** – or use the button:
+1. Open **Settings → Marketplace** (Home Assistant 2026.11 or newer; on older versions open **HACS**), search for **"Swiss Lottery"** and download it — or use the button, which opens the integration directly in your Marketplace:
 
    [![Open in Marketplace](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=prusuino&repository=ha_swiss_lottery&category=integration)
 
 2. Restart Home Assistant.
+
+The integration is listed in the Marketplace default catalog (formerly the HACS default store), so no custom repository is needed. If your installation does not show it yet, add `https://github.com/prusuino/ha_swiss_lottery` under **⋮ → Custom repositories** with the category *Integration* as a fallback.
 
 ### Manual
 
