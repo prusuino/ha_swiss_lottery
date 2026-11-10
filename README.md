@@ -10,6 +10,17 @@ A Home Assistant custom integration for the Swiss lottery games run by **Swisslo
 
 Did my numbers come up on Wednesday? How big is Saturday's jackpot? Did ticket 2 win anything? That's what this integration answers, right on your dashboard – and a binary sensor that switches on when a ticket wins lets an automation tell you.
 
+## Highlights
+
+- **Three games**: Swiss Lotto, EuroMillions and EuroDreams – drawn numbers, bonus numbers, the extra games (Joker, Super-Star, Replay, 2nd Chance), the jackpot and the closing time of the next draw.
+- **Your tickets, checked for you**: every ticket is compared with every draw – matched numbers, prize rank and prize per ticket, and a binary sensor that switches on when one wins.
+- **Tickets stay at home**: they are stored with the config entry and compared locally; the hourly request carries nothing about you.
+- **A card with the balls**: the bundled card shows the drawn numbers and highlights your hits, with a visual editor – plus a dashboard strategy.
+- **Built for the automation editor**: triggers (a ticket has won, a draw was published, jackpot crossed a threshold), conditions (a ticket has won / no ticket has won) and a blueprint that tells you about a win – no templates needed.
+- **One request per hour**: a single request covers all three games.
+- **Unavailable rather than wrong**: should Swisslos change its page, the entities go unavailable and a repair notice appears.
+- **Set up in a minute**: pick the game and type your tickets, one per line; German, English, French and Italian; diagnostics download.
+
 ## Background
 
 Swisslos publishes the result of every draw on [swisslos.ch](https://www.swisslos.ch). There is no feed or API, so the integration reads the published results page once an hour – a single request covers all three games – and turns them into entities. The page is parsed with the standard library; should Swisslos change its page layout, the entities become unavailable rather than showing something wrong, and the integration gets an update.
