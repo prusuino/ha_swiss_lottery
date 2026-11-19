@@ -1,5 +1,6 @@
 {
   "name": "Swiss Lottery (Swisslos)",
+  "country": "CH",
   "zip_release": true,
   "filename": "swiss_lottery.zip",
   "render_readme": true,
