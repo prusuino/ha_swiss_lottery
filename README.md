@@ -202,6 +202,8 @@ On Home Assistant 2026.10 or newer the integration adds its own entries to the a
 | **A draw was published** | the draw date of a game changes – Swisslos has published a new draw |
 | **Jackpot crossed a threshold** | the jackpot of the next draw crosses an amount you set in CHF (or the value of a CHF entity) |
 
+**After an outage.** Home Assistant ignores a change that comes out of "unavailable", which is what an entity shows while Swisslos cannot be reached. These triggers compare with the state before the outage instead: what began in the meantime still fires, and what was already there does not fire a second time; a draw that only reappears does not count as a new one.
+
 On 2026.11 or newer there are also two conditions, **A ticket has won** and **No ticket has won**. Each entry targets the integration's own entities (pick an entity, the game's device or an area); the usual *for* duration and behaviour options apply.
 
 ```yaml
