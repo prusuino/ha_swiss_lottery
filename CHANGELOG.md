@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.4 — 2026-11-23
+
+- **Fixed: a draw published during an outage did not fire the triggers.** While Swisslos cannot be reached the entities are unavailable, and Home Assistant ignores every change out of "unavailable". A new draw, or a win, that appeared when the data came back did not fire *Draw published* and *Ticket won*. Both triggers now compare with the state before the outage; a draw that only reappears does not fire again.
+- Tests for the triggers with real automations.
+
 ## 0.5.3 — 2026-11-09
 
 - **Listed in the Marketplace default catalog.** The README now leads with the Marketplace/HACS search and keeps the custom-repository steps as a fallback, as suggested by @frenck in the HACS review (hacs/default #13449).

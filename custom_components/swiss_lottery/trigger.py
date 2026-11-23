@@ -12,8 +12,8 @@ from __future__ import annotations
 
 from homeassistant.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
 from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN, SensorDeviceClass
-from homeassistant.const import STATE_ON
-from homeassistant.core import HomeAssistant
+from homeassistant.const import STATE_ON, STATE_UNAVAILABLE, STATE_UNKNOWN
+from homeassistant.core import HomeAssistant, State
 from homeassistant.helpers import entity_registry as er
 
 from .const import DOMAIN
@@ -43,19 +43,93 @@ else:
             and entry.platform == DOMAIN
         }
 
-    class _TicketWon(make_entity_target_state_trigger(WIN_DOMAIN_SPECS, STATE_ON)):
-        """The win entity switches to on: at least one ticket won the latest draw."""
+    _GAP = (STATE_UNAVAILABLE, STATE_UNKNOWN)
+
+    class _AcrossGaps:
+        """Lets a target-state trigger see a change that follows a gap.
+
+        The core skips every change out of "unavailable" or "unknown". While
+        the source cannot be reached the entities are unavailable, so
+        whatever began during the outage would switch an entity from
+        unavailable straight to its new state, and the core would not fire.
+        Such a change is let through here and judged against the last state
+        seen before the gap (the tracked value, which can be an attribute): it
+        fires when that value was not already the
+        target. With nothing known from before the gap, a trigger that
+        announces something (`_fire_without_history`) fires, the others
+        stay quiet. The core asks is_valid_state for every state with a
+        value and only then is_valid_transition, so the states are
+        remembered there.
+        """
+
+        _excluded_from_states = frozenset()
+        _fire_without_history = False
+
+        def __init__(self, hass: HomeAssistant, config) -> None:
+            super().__init__(hass, config)
+            self._last_state: dict[str, str] = {}
+            self._previous_state: dict[str, str | None] = {}
+
+        def entity_filter(self, entities: set[str]) -> set[str]:
+            # Start from what the entities show now, so that a gap right
+            # after the automation starts is judged against a known state.
+            kept = super().entity_filter(entities)
+            for entity_id in kept:
+                state = self._hass.states.get(entity_id)
+                if entity_id not in self._last_state and state is not None and state.state not in _GAP:
+                    self._last_state[entity_id] = self._get_tracked_value(state)
+            return kept
+
+        def is_valid_state(self, state, report_not_triggered) -> bool:
+            self._previous_state[state.entity_id] = self._last_state.get(state.entity_id)
+            self._last_state[state.entity_id] = self._get_tracked_value(state)
+            return super().is_valid_state(state, report_not_triggered)
+
+        def is_valid_transition(self, from_state, to_state) -> bool:
+            if from_state.state not in _GAP:
+                return super().is_valid_transition(from_state, to_state)
+            before = self._previous_state.get(to_state.entity_id)
+            if before is None:
+                return self._fire_without_history
+            return before not in self._to_states
+
+    class _TicketWon(_AcrossGaps, make_entity_target_state_trigger(WIN_DOMAIN_SPECS, STATE_ON)):
+        """The win entity switches to on: at least one ticket won the latest draw.
+
+        After a gap it fires unless the entity was already on before it."""
+
+        _fire_without_history = True
 
         def entity_filter(self, entities: set[str]) -> set[str]:
             return _own_entities(self._hass, super().entity_filter(entities))
 
     class _DrawPublished(EntityTriggerBase):
-        """The draw-date entity changes: Swisslos published a new draw."""
+        """The draw-date entity changes: Swisslos published a new draw.
+
+        After a gap it fires when the date differs from the one seen before
+        it; a draw that only reappears does not fire again."""
 
         _domain_specs = DRAW_DATE_DOMAIN_SPECS
+        _excluded_from_states = frozenset()
+
+        def __init__(self, hass: HomeAssistant, config) -> None:
+            super().__init__(hass, config)
+            self._last_draw: dict[str, str] = {}
+            self._previous_draw: dict[str, str | None] = {}
 
         def entity_filter(self, entities: set[str]) -> set[str]:
             return _own_entities(self._hass, super().entity_filter(entities))
+
+        def is_valid_state(self, state: State, report_not_triggered) -> bool:
+            self._previous_draw[state.entity_id] = self._last_draw.get(state.entity_id)
+            self._last_draw[state.entity_id] = state.state
+            return True
+
+        def is_valid_transition(self, from_state: State, to_state: State) -> bool:
+            if from_state.state in _GAP:
+                before = self._previous_draw.get(to_state.entity_id)
+                return before is not None and before != to_state.state
+            return from_state.state != to_state.state
 
     class _JackpotCrossedThreshold(
         make_entity_numerical_state_crossed_threshold_trigger(JACKPOT_DOMAIN_SPECS, "CHF")
