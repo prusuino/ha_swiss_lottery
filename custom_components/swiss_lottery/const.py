@@ -28,14 +28,15 @@ GAME_RULES = {
 }
 MAX_TICKETS = 10
 
-# Swisslos publishes the results of all three games in the footer of this page.
+# Swisslos publishes the results of each game on that game's own page; {game}
+# is "swisslotto", "euromillions" or "eurodreams".
 SWISSLOS_RESULTS_URL = (
-    "https://www.swisslos.ch/en/swisslotto/information/winning-numbers/winning-numbers.html"
+    "https://www.swisslos.ch/en/{game}/information/winning-numbers/winning-numbers.html"
 )
 SWISSLOS_REQUEST_TIMEOUT_SECONDS = 30
 # Draws are twice (Swiss Lotto Wed/Sat, EuroMillions Tue/Fri, EuroDreams
 # Mon/Thu) a week in the evening; the results are online within the hour.
-# One request per hour for all three games is plenty.
+# One request per hour and game is plenty.
 UPDATE_INTERVAL_SECONDS = 3600
 
 ATTRIBUTION = "Source: Swisslos (swisslos.ch)"

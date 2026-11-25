@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.5 — 2026-11-25
+
+- **Fixed: no results since Swisslos rebuilt its website.** The block with the latest draw of all three games is gone from the page footer, so every refresh failed with *swisslos.ch page not understood* and the entities were unavailable. The integration now reads each game's own winning-numbers page: numbers, prize tables, extra games and jackpots from the results on the page, the closing time of the next draw from the page header.
+- **One request per hour and game** instead of one for all three; only the games you added are asked for.
+- The repair notice said the entities keep their last values while the page cannot be read. They are unavailable, and the notice says so now.
+- Tests for the parser against the three pages as published.
+
 ## 0.5.4 — 2026-11-23
 
 - **Fixed: a draw published during an outage did not fire the triggers.** While Swisslos cannot be reached the entities are unavailable, and Home Assistant ignores every change out of "unavailable". A new draw, or a win, that appeared when the data came back did not fire *Draw published* and *Ticket won*. Both triggers now compare with the state before the outage; a draw that only reappears does not fire again.

@@ -1,10 +1,11 @@
 """Reading the published draw results from swisslos.ch.
 
 Swisslos publishes the results of every draw on its website; there is no
-machine-readable feed. The footer of the winning-numbers page carries, for
-all three games at once, the latest draw (date and numbers), the extra-game
-number, the prize table, the current jackpot and the next draw. One request
-therefore covers Swiss Lotto, EuroMillions and EuroDreams.
+machine-readable feed. Each game has its own winning-numbers page. Its main
+part carries the latest draw of that game: date, numbers, the extra-game
+number, the prize tables and the jackpots. The page header carries, for all
+three games, the closing time of the next draw. One request per game
+therefore covers what the integration shows.
 
 The page is parsed with the standard library only (html.parser): a small
 element tree is built and then queried by CSS class. The class names are the
@@ -15,10 +16,12 @@ something wrong.
 from __future__ import annotations
 
 import asyncio
+import json
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
 from html.parser import HTMLParser
+from zoneinfo import ZoneInfo
 
 import aiohttp
 
@@ -167,14 +170,20 @@ class DrawResult:
 
 # --------------------------------------------------------------------------- parsing
 
-# The footer has one block per game, marked with data-hash="swisslotto" etc.
-# (the class names carry a hyphenated variant, "swiss-lotto", so the data
-# attribute is the stable handle).
-_CONTAINER_HASH = {
+# Path segment of a game's own pages, also the game the results form names.
+_GAME_PAGE = {
     GAME_SWISSLOTTO: "swisslotto",
     GAME_EUROMILLIONS: "euromillions",
     GAME_EURODREAMS: "eurodreams",
 }
+# Key of a game in the data the page header carries for all three games.
+_HEADER_KEY = {
+    GAME_SWISSLOTTO: "swissLotto",
+    GAME_EUROMILLIONS: "euroMillions",
+    GAME_EURODREAMS: "euroDreams",
+}
+_HEADER_EXTRA_KEY = {GAME_SWISSLOTTO: "joker", GAME_EUROMILLIONS: "superstar"}
+_EXTRA_NAME = {GAME_SWISSLOTTO: "Joker", GAME_EUROMILLIONS: "Super-Star"}
 _MAIN_NUMBER_CLASSES = ("actual-numbers__number___normal", "actual-numbers__number___eurodreams")
 _BONUS_NUMBER_CLASSES = (
     "actual-numbers__number___lucky",
@@ -183,6 +192,8 @@ _BONUS_NUMBER_CLASSES = (
 )
 _DATE_RE = re.compile(r"(\d{2})\.(\d{2})\.(\d{4})")
 _TIME_RE = re.compile(r"\b(\d{1,2}:\d{2})\b")
+# The header writes its times in UTC; draws and closing times are Swiss time.
+_SWISS_TZ = ZoneInfo("Europe/Zurich")
 
 
 def _parse_date(text: str) -> date | None:
@@ -247,27 +258,100 @@ def _parse_table(table: _Node) -> tuple[PrizeTier, ...]:
     return tuple(tiers)
 
 
+def _header_data(root: _Node) -> dict:
+    """What the page header knows about the latest draw of every game.
+
+    `<app-header winning-numbers='{"swissLotto": {...}, ...}'>`: closing time
+    of the next draw (`deadline`), time of the last draw, numbers and jackpot.
+    An empty dict when the header carries nothing readable.
+    """
+    for node in root.iter():
+        raw = node.attrs.get("winning-numbers")
+        if not raw:
+            continue
+        try:
+            data = json.loads(raw)
+        except ValueError:
+            return {}
+        return data if isinstance(data, dict) else {}
+    return {}
+
+
+def _header_time(value) -> datetime | None:
+    """'2026-11-25T18:00:00Z' → the same moment in Swiss time."""
+    if not isinstance(value, str):
+        return None
+    try:
+        moment = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    if moment.tzinfo is None:
+        return None
+    return moment.astimezone(_SWISS_TZ)
+
+
+def _jackpot_in(table: _Node) -> float | None:
+    """'Jackpot next draw: CHF 1'500'000' → 1500000.0."""
+    cell = table.find(cls="quotes__game-jackpot-value")
+    if cell is None:
+        return None
+    return _parse_amount(re.sub(r"^\s*CHF\s*", "", cell.text()))
+
+
+class _Block:
+    """One game of the results: its numbers and the tables that follow it."""
+
+    def __init__(self, node: _Node) -> None:
+        self.node = node
+        self.tiers: tuple[PrizeTier, ...] = ()
+        self.jackpot: float | None = None
+
+    @property
+    def is_extra(self) -> bool:
+        return self.node.has_class("quotes__extra-game")
+
+    @property
+    def is_second_chance(self) -> bool:
+        return (
+            self.node.find(cls="second-chance-logo") is not None
+            or self.node.find(cls="actual-numbers__2nd-chance") is not None
+        )
+
+
+def _result_blocks(scope: _Node) -> list[_Block]:
+    """The games of the results in page order, each with its prize table and
+    jackpot. The tables stand next to or inside the block they belong to."""
+    blocks: list[_Block] = []
+    for node in scope.iter():
+        if node.tag == "div" and (node.has_class("quotes__game") or node.has_class("quotes__extra-game")):
+            blocks.append(_Block(node))
+        elif node.tag == "table" and blocks:
+            block = blocks[-1]
+            if node.has_class("quotes__game-jackpot"):
+                if block.jackpot is None:
+                    block.jackpot = _jackpot_in(node)
+            elif not block.tiers:
+                block.tiers = _parse_table(node)
+    return blocks
+
+
 def _parse_game(root: _Node, game: str) -> DrawResult:
-    container = next(
-        (
-            n
-            for n in root.find_all(cls="flyout__game-container")
-            if n.attrs.get("data-hash") == _CONTAINER_HASH[game]
-        ),
-        None,
-    )
-    if container is None:
+    scope = root.find(cls="filter-results")
+    if scope is None:
         raise SwisslosParseError(f"no result block for {game}")
+    form = root.find(cls="filter__form")
+    shown = form.attrs.get("data-statistics-game") if form is not None else None
+    if shown and shown != _GAME_PAGE[game]:
+        raise SwisslosParseError(f"page shows {shown} instead of {game}")
+    header = _header_data(root).get(_HEADER_KEY[game])
+    if not isinstance(header, dict):
+        header = {}
 
-    date_node = container.find(cls="actual-numbers__date-time")
-    draw_date = _parse_date(date_node.text()) if date_node else None
-    if draw_date is None:
-        raise SwisslosParseError(f"no draw date for {game}")
-
-    bodies = container.find_all(cls="actual-numbers___body")
-    if not bodies:
+    blocks = _result_blocks(scope)
+    main = next((b for b in blocks if not b.is_extra and not b.is_second_chance), None)
+    main_body = main.node.find(cls="actual-numbers___body") if main is not None else None
+    if main is None or main_body is None:
         raise SwisslosParseError(f"no numbers for {game}")
-    main_body = next((b for b in bodies if not b.has_class("actual-numbers__2nd-chance")), bodies[0])
     numbers = _numbers_in(main_body, _MAIN_NUMBER_CLASSES)
     bonus = _numbers_in(main_body, _BONUS_NUMBER_CLASSES)
     replay_node = main_body.find(cls="actual-numbers__number___replay")
@@ -275,65 +359,69 @@ def _parse_game(root: _Node, game: str) -> DrawResult:
     if not numbers:
         raise SwisslosParseError(f"empty numbers for {game}")
 
-    second_chance: tuple[int, ...] = ()
-    sc_body = next((b for b in bodies if b.has_class("actual-numbers__2nd-chance")), None)
-    if sc_body is not None:
-        second_chance = _numbers_in(sc_body, _MAIN_NUMBER_CLASSES)
+    # The date field of the results form holds the draw that is shown.
+    draw_date = None
+    date_input = root.find(cls="js-datepicker-input")
+    if date_input is not None:
+        draw_date = _parse_date(date_input.attrs.get("value", ""))
+    if draw_date is None:
+        last_draw = _header_time(header.get("lastDrawingDate"))
+        draw_date = last_draw.date() if last_draw else None
+    if draw_date is None:
+        raise SwisslosParseError(f"no draw date for {game}")
 
-    # Next draw and jackpots
+    second_chance: tuple[int, ...] = ()
+    sc_tiers: tuple[PrizeTier, ...] = ()
+    second = next((b for b in blocks if not b.is_extra and b.is_second_chance), None)
+    if second is not None:
+        second_chance = _numbers_in(second.node, _MAIN_NUMBER_CLASSES)
+        sc_tiers = second.tiers
+
+    # Next draw: the header knows it for every game, the box beside the logo
+    # only for Swiss Lotto and EuroMillions.
     next_draw = None
     closing = None
-    nd_date = container.find(cls="actual-jackpot__next-draw___date")
-    nd_time = container.find(cls="actual-jackpot__next-draw___time")
-    if nd_date is not None:
-        next_draw = _parse_date(nd_date.text())
-    if nd_time is not None:
-        m = _TIME_RE.search(nd_time.text())
-        closing = m.group(1) if m else None
+    deadline = _header_time(header.get("deadline"))
+    if deadline is not None:
+        next_draw = deadline.date()
+        closing = deadline.strftime("%H:%M")
+    else:
+        pick = root.find(cls="cockpit__jackpot___next-pick-time")
+        if pick is not None:
+            next_draw = _parse_date(pick.text())
+            m = _TIME_RE.search(pick.text())
+            closing = m.group(1) if m and next_draw else None
+
+    # Jackpot of the next draw: beside the logo as a plain number, below the
+    # prize table as text.
     jackpot = None
-    extra_jackpot = None
-    # The first jackpot node is the game's own, a second one (marked extraGame
-    # for Swiss Lotto, unmarked for EuroMillions) belongs to the extra game.
-    for node in container.find_all(cls="jackpot___value"):
+    for node in root.find_all(cls="jackpot___value"):
         raw = node.attrs.get("data-jackpot")
-        value = float(raw) if raw and re.fullmatch(r"\d+(\.\d+)?", raw) else None
-        if node.attrs.get("data-jackpot-type") == "extraGame" or jackpot is not None:
-            if value is not None:
-                extra_jackpot = value
-        elif value is not None:
-            jackpot = value
+        if raw and re.fullmatch(r"\d+(\.\d+)?", raw):
+            jackpot = float(raw)
+            break
+    if jackpot is None:
+        jackpot = main.jackpot
 
-    # Prize tables: the main game, then the extra games (Joker / 2. Chance / Super-Star)
-    tiers: tuple[PrizeTier, ...] = ()
-    sc_tiers: tuple[PrizeTier, ...] = ()
-    extra_name = None
-    extra_tiers: tuple[PrizeTier, ...] = ()
-    for block in container.find_all(cls="quotes__game") + container.find_all(cls="quotes__extra-game"):
-        title_node = block.find(cls="quotes__game-title")
-        table = block.find(tag="table")
-        if table is None:
-            continue
-        title = title_node.text() if title_node else ""
-        parsed = _parse_table(table)
-        if block.has_class("quotes__game"):
-            tiers = parsed
-        elif re.search(r"chance", title, re.I):
-            sc_tiers = parsed
-        else:
-            extra_name = title or extra_name
-            extra_tiers = parsed
-
-    extra_number = None
-    extra_node = container.find(cls="actual-numbers__extra-game___number")
-    if extra_node is not None:
-        extra_number = extra_node.text() or None
     extra_game = None
-    if extra_name or extra_number or extra_jackpot is not None:
+    extra = next((b for b in blocks if b.is_extra), None)
+    extra_number = None
+    if extra is not None:
+        code_node = extra.node.find(cls="actual-numbers__extra-game___number")
+        if code_node is not None:
+            extra_number = code_node.text() or None
+        else:
+            # Super-Star: one character per ball.
+            extra_number = "".join(li.text() for li in extra.node.find_all(cls="actual-numbers__number")) or None
+    if extra_number is None and game in _HEADER_EXTRA_KEY:
+        code = header.get(_HEADER_EXTRA_KEY[game])
+        extra_number = code if isinstance(code, str) and code else None
+    if extra is not None or extra_number:
         extra_game = ExtraGame(
-            name=extra_name or ("Joker" if game == GAME_SWISSLOTTO else "Super-Star"),
+            name=_EXTRA_NAME.get(game, "Super-Star"),
             number=extra_number,
-            jackpot_chf=extra_jackpot,
-            tiers=extra_tiers,
+            jackpot_chf=extra.jackpot if extra is not None else None,
+            tiers=extra.tiers if extra is not None else (),
         )
 
     return DrawResult(
@@ -347,45 +435,50 @@ def _parse_game(root: _Node, game: str) -> DrawResult:
         jackpot_chf=jackpot,
         next_draw=next_draw,
         next_draw_closing=closing,
-        tiers=tiers,
+        tiers=main.tiers,
         second_chance_tiers=sc_tiers,
     )
 
 
-def parse_results(html: str, games: tuple[str, ...] | None = None) -> dict[str, DrawResult]:
-    """All games found on the page (or the requested ones), keyed by game."""
-    root = parse_tree(html)
-    out: dict[str, DrawResult] = {}
-    for game in games or tuple(_CONTAINER_HASH):
-        out[game] = _parse_game(root, game)
-    return out
+def parse_result(html: str, game: str) -> DrawResult:
+    """The latest draw of one game from that game's winning-numbers page."""
+    return _parse_game(parse_tree(html), game)
 
 
 # --------------------------------------------------------------------------- fetch
 
 
-async def async_fetch_results(
-    session: aiohttp.ClientSession, games: tuple[str, ...] | None = None
-) -> dict[str, DrawResult]:
-    """Download the results page once and parse the requested games.
-
-    Parsing ~90 KB of HTML takes tens of milliseconds, so it runs in the
-    default executor rather than on the event loop.
-    """
+async def _async_fetch_page(session: aiohttp.ClientSession, game: str) -> str:
     try:
         async with session.get(
-            SWISSLOS_RESULTS_URL,
+            SWISSLOS_RESULTS_URL.format(game=_GAME_PAGE[game]),
             timeout=aiohttp.ClientTimeout(total=SWISSLOS_REQUEST_TIMEOUT_SECONDS),
             headers={"Accept": "text/html", "Accept-Language": "en"},
         ) as resp:
             if resp.status >= 400:
                 raise SwisslosCommunicationError(f"HTTP {resp.status}")
-            html = await resp.text()
+            return await resp.text()
     except TimeoutError as err:
         raise SwisslosCommunicationError("timeout") from err
     except aiohttp.ClientError as err:
         raise SwisslosCommunicationError(type(err).__name__) from err
-    return await asyncio.get_running_loop().run_in_executor(None, parse_results, html, games)
+
+
+async def async_fetch_results(
+    session: aiohttp.ClientSession, games: tuple[str, ...] | None = None
+) -> dict[str, DrawResult]:
+    """Download the winning-numbers page of every requested game (all three
+    when none is named), one after the other, and parse it.
+
+    Parsing ~50 KB of HTML takes tens of milliseconds, so it runs in the
+    default executor rather than on the event loop.
+    """
+    loop = asyncio.get_running_loop()
+    out: dict[str, DrawResult] = {}
+    for game in games or tuple(_GAME_PAGE):
+        html = await _async_fetch_page(session, game)
+        out[game] = await loop.run_in_executor(None, parse_result, html, game)
+    return out
 
 
 def next_draw_datetime(result: DrawResult, tzinfo) -> datetime | None:

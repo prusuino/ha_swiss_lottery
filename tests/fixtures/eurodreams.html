@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en"><body>
+<app-header locale="en" game-product-key="eurodreams" winning-numbers="{&quot;swissLotto&quot;:{&quot;deadline&quot;:&quot;2026-11-25T18:00:00Z&quot;,&quot;jackpot&quot;:150000000,&quot;lastDrawingDate&quot;:&quot;2026-11-21T16:30:00Z&quot;,&quot;numbers&quot;:[14,21,22,29,31,32],&quot;luckyNumber&quot;:3,&quot;replayNumber&quot;:3,&quot;joker&quot;:&quot;78319&quot;},&quot;euroMillions&quot;:{&quot;deadline&quot;:&quot;2026-11-27T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-24T20:00:00Z&quot;,&quot;jackpot&quot;:5400000000,&quot;numbers&quot;:[3,5,37,44,49],&quot;stars&quot;:[5,6],&quot;secondChanceNumbers&quot;:[1,13,14,18,48],&quot;superstar&quot;:&quot;E929L&quot;,&quot;swissWinCodes&quot;:[],&quot;extraMillionsCodes&quot;:[]},&quot;euroDreams&quot;:{&quot;deadline&quot;:&quot;2026-11-26T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-23T20:00:00Z&quot;,&quot;jackpot&quot;:5000000,&quot;numbers&quot;:[2,7,8,9,16,24],&quot;dreamNumber&quot;:1}}"></app-header>
+<div class="cockpit__jackpot"></div>
+<div class="filter">
+         <form class="filter__form" data-statistics-game="eurodreams" data-statistics-name="quotes" id="swissLottoStatisticsQuotesForm"
+                method="post" action="/en/eurodreams/information/winning-numbers/winning-numbers.html" >
+               <label>
+                   <span>Date of draw</span><br/>
+      <div class="flatpickr js-datepicker-wrapper" data-custom-class="lotto-draw-days"
+           data-disabled-week-days="[0,2,3,5,6]" data-highlight-week-days="[1,4]"
+           data-min-date="01.01.2023" data-max-date="25.11.2026">
+          <input class="js-datepicker-input hasDatepicker" data-id="altinput" data-input
+                 name="formattedFilterDate"
+                 type="text" id="formattedFilterDate" value="23.11.2026">
+          <input name="filterDate" type="hidden" value="">
+          <input name="currentDate" type="hidden" id="currentDate" value="25.11.2026"/>
+          <button class="js-datepicker-trigger" data-toggle type="button"></button>
+      </div>
+               </label>
+               <button class="filter-next-draw button__secondary" name="showNextDraw"
+                  value="true" disabled="disabled">Next draw</button>
+               <button class="filter-prev-draw button__secondary" name="showPrevDraw"
+                  value="true">Previous draw</button>
+          </form></div>
+<h2>Winning numbers &amp; odds</h2>
+<div class="filter-results">
+        <div class="quotes__game">
+            
+            <div class="euro-millions-logo">
+                <img alt="EuroDreams Logo" src="/media/tech/layout/images/logo/eurodreams_logo.png">
+            </div>
+            <div class="actual-numbers___body">
+                <ul class="actual-numbers__numbers">
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">2</span>
+                    </li>
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">7</span>
+                    </li>
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">8</span>
+                    </li>
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">9</span>
+                    </li>
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">16</span>
+                    </li>
+                    <li class="actual-numbers__number  actual-numbers__number___eurodreams">
+                        <span class="transform__center">24</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___eurodreams-dream">
+                        <span class="transform__center">1</span>
+                    </li>
+                </ul>
+            </div>
+            
+        </div>
+        <table class="quotes__game-table">
+            <thead>
+                <tr>
+                    <td id="lotto-quotes__game-table___correct-number">Number of correct numbers</td>
+                    <td id="lotto-quotes__game-table___winners-counts">Number of winners</td>
+                    <td id="lotto-quotes__game-table___profits">Prize (CHF)</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">6 + 1</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">0</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    50&#39;000.00
+                    <span  class="eurodreams-quotes__game-table___profit-info">30 years per month</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">6</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">1</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    2&#39;222.00
+                    <span  class="eurodreams-quotes__game-table___profit-info">5 years per month</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">5 + 1 &amp; 5</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">142</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    591.35
+                </td>
+            </tr>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">4 + 1 &amp; 4</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">6&#39;480</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    36.35
+                </td>
+            </tr>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">3 + 1 &amp; 3</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">85&#39;893</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    5.75
+                </td>
+            </tr>
+            <tr>
+                <td class="correct-number" headers="lotto-quotes__game-table___correct-number" >
+                    <span class="eurodreams-quotes__game-table___correct-number-part">2 + 1 &amp; 2</span>
+                </td>
+                <td headers="lotto-quotes__game-table___winners-counts">476&#39;696</td>
+                <td headers="lotto-quotes__game-table___profits" >
+                    3.00
+                </td>
+            </tr>
+            </tbody>
+        </table></div>
+</body></html>

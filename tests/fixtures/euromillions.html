@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en"><body>
+<app-header locale="en" game-product-key="euromillions" winning-numbers="{&quot;swissLotto&quot;:{&quot;deadline&quot;:&quot;2026-11-25T18:00:00Z&quot;,&quot;jackpot&quot;:150000000,&quot;lastDrawingDate&quot;:&quot;2026-11-21T16:30:00Z&quot;,&quot;numbers&quot;:[14,21,22,29,31,32],&quot;luckyNumber&quot;:3,&quot;replayNumber&quot;:3,&quot;joker&quot;:&quot;78319&quot;},&quot;euroMillions&quot;:{&quot;deadline&quot;:&quot;2026-11-27T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-24T20:00:00Z&quot;,&quot;jackpot&quot;:5400000000,&quot;numbers&quot;:[3,5,37,44,49],&quot;stars&quot;:[5,6],&quot;secondChanceNumbers&quot;:[1,13,14,18,48],&quot;superstar&quot;:&quot;E929L&quot;,&quot;swissWinCodes&quot;:[],&quot;extraMillionsCodes&quot;:[]},&quot;euroDreams&quot;:{&quot;deadline&quot;:&quot;2026-11-26T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-23T20:00:00Z&quot;,&quot;jackpot&quot;:5000000,&quot;numbers&quot;:[2,7,8,9,16,24],&quot;dreamNumber&quot;:1}}"></app-header>
+<div class="cockpit__jackpot"><div class="jackpot___value cf" data-jackpot-game="euromillions" data-jackpot="54000000">
+			</div><div class="cockpit__jackpot___next-pick">
+			<span class="cockpit__jackpot___next-pick-info">Closing time next draw</span>
+			<span class="cockpit__jackpot___next-pick-time">
+				<span class="date">Fri, 27.11.2026</span>
+				<span class="time">19:30</span>
+			</span>
+		</div></div>
+<div class="filter">
+        <form class="filter__form"
+              data-statistics-game="euromillions" data-statistics-name="quotes" id="swissLottoStatisticsQuotesForm"
+              method="post" action="/en/euromillions/information/winning-numbers/winning-numbers.html">
+            <label>
+                <span>Date of draw</span><br/>
+                <div class="flatpickr js-datepicker-wrapper"
+                     data-custom-class="lotto-draw-days"
+                     data-disabled-week-days="[0,1,3,4,6]"
+                     data-highlight-week-days="[2,5]"
+                     data-min-date="07.01.2005" data-max-date="25.11.2026">
+                    <input class="js-datepicker-input hasDatepicker" data-id="altinput" data-input
+                           name="formattedFilterDate"
+                           type="text" id="formattedFilterDate" value="24.11.2026">
+                    <input name="filterDate" type="hidden" value="">
+                    <input name="currentDate" type="hidden" id="currentDate" value="25.11.2026"/>
+                    <button class="js-datepicker-trigger" data-toggle type="button"></button>
+                </div>
+            </label>
+            <button class="filter-next-draw button__secondary" name="showNextDraw"
+                    value="true" disabled="disabled">Next draw</button>
+            <button class="filter-prev-draw button__secondary" name="showPrevDraw"
+                    value="true">Previous draw</button>
+        </form></div>
+<h2>Winning numbers &amp; odds</h2>
+<div class="filter-results">
+        <div class="quotes__game">
+            <div class="euro-millions-logo">
+                <img alt="Euromillions Logo" height="46px" src="/media/tech/layout/images/grid_items/euro_millions_logo_two_lines_stats.png" width="149px">
+            </div>
+            <div class="actual-numbers___body">
+                <ul class="actual-numbers__numbers">
+                    <li class="actual-numbers__number actual-numbers__number___normal"><span class="transform__center">3</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal"><span class="transform__center">5</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal"><span class="transform__center">37</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal"><span class="transform__center">44</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal"><span class="transform__center">49</span></li>
+                    <li class="actual-numbers__number___superstar___label visible-print">Stars:</li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">5</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">6</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="quotes__game-table">
+            <thead>
+            <tr>
+                <td id="lotto-quotes__game-table___correct-number">Number of correct numbers</td>
+                <td id="lotto-quotes__game-table___winners-counts">Number of winners</td>
+                <td id="lotto-quotes__game-table___profits">Prize (CHF)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="correct-number">5 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"><img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>0</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">5 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>1</td>
+                <td>446&#39;627.60</td>
+            </tr>
+            <tr>
+                <td class="correct-number">5</td>
+                <td>0</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">4 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"><img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>10</td>
+                <td>30&#39;217.95</td>
+            </tr>
+            <tr>
+                <td class="correct-number">4 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>445</td>
+                <td>297.10</td>
+            </tr>
+            <tr>
+                <td class="correct-number">3 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"><img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>938</td>
+                <td>149.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">4</td>
+                <td>950</td>
+                <td>103.40</td>
+            </tr>
+            <tr>
+                <td class="correct-number">2 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"><img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>15&#39;494</td>
+                <td>31.70</td>
+            </tr>
+            <tr>
+                <td class="correct-number">3 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>22&#39;109</td>
+                <td>24.75</td>
+            </tr>
+            <tr>
+                <td class="correct-number">3</td>
+                <td>46&#39;120</td>
+                <td>22.10</td>
+            </tr>
+            <tr>
+                <td class="correct-number">1 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"><img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>87&#39;334</td>
+                <td>14.15</td>
+            </tr>
+            <tr>
+                <td class="correct-number">2 + <img src="/media/tech/layout/images/euromillions-star-footer.png" alt="" class="euromillions-quotes__game-table___superstar"></td>
+                <td>350&#39;188</td>
+                <td>11.10</td>
+            </tr>
+            <tr>
+                <td class="correct-number">2</td>
+                <td>716&#39;665</td>
+                <td>8.75</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="quotes__game-jackpot">
+            <tr class="quotes__game-jackpot-row">
+                <th class="quotes__game-jackpot-label">Jackpot next draw:</th>
+                <td class="quotes__game-jackpot-value">CHF 54&#39;000&#39;000</td>
+            </tr>
+        </table>
+            <div class="quotes__game">
+                <div class="second-chance-logo">
+                    <img alt="2nd Chance Logo" height="46px" src="/assets/images/logo/2nd-chance-logo.png"
+                         width="149px">
+                </div>
+                <div class="actual-numbers___body">
+                    <ul class="actual-numbers__numbers">
+                        <li class="actual-numbers__number actual-numbers__number___normal">
+                            <span class="transform__center">1</span>
+                        </li>
+                        <li class="actual-numbers__number actual-numbers__number___normal">
+                            <span class="transform__center">13</span>
+                        </li>
+                        <li class="actual-numbers__number actual-numbers__number___normal">
+                            <span class="transform__center">14</span>
+                        </li>
+                        <li class="actual-numbers__number actual-numbers__number___normal">
+                            <span class="transform__center">18</span>
+                        </li>
+                        <li class="actual-numbers__number actual-numbers__number___normal">
+                            <span class="transform__center">48</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <table class="quotes__extra-game-table">
+                <thead>
+                <tr>
+                    <td id="quotes__2nd-chance-game-table___correct-numbers">Number of correct numbers</td>
+                    <td id="quotes__2nd-chance-game-table___winners-count">Number of winners</td>
+                    <td id="quotes__2nd-chance-game-table___profit">Prize (CHF)</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="correct-number" headers="quotes__2nd-chance-game-table___correct-numbers">5</td>
+                    <td headers="quotes__2nd-chance-game-table___winners-count">0</td>
+                    <td headers="quotes__2nd-chance-game-table___profit">0.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number" headers="quotes__2nd-chance-game-table___correct-numbers">4</td>
+                    <td headers="quotes__2nd-chance-game-table___winners-count">74</td>
+                    <td headers="quotes__2nd-chance-game-table___profit">950.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number" headers="quotes__2nd-chance-game-table___correct-numbers">3</td>
+                    <td headers="quotes__2nd-chance-game-table___winners-count">4&#39;250</td>
+                    <td headers="quotes__2nd-chance-game-table___profit">44.20</td>
+                </tr>
+                </tbody>
+            </table>
+        <div class="quotes__extra-game">
+            <div class="superstar-logo">
+                <img alt="Superstar Logo Logo" height="46px" src="/media/tech/layout/images/logo/superstar_logo.png" width="81px">
+            </div>
+            <div class="actual-numbers___body">
+                <ul class="actual-numbers__numbers">
+                    <li class="actual-numbers__number actual-numbers__number___superstar actual-numbers__number___superstar-red">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">E</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar actual-numbers__number___superstar-red">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">9</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar actual-numbers__number___superstar-red">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">2</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar actual-numbers__number___superstar-red">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">9</span>
+                    </li>
+                    <li class="actual-numbers__number actual-numbers__number___superstar actual-numbers__number___superstar-red">
+                        <img alt="" class="actual-numbers__number___superstar-star" src="/media/tech/layout/images/euromillions-star-footer.png">
+                        <span class="transform__center">L</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <table class="quotes__extra-game-table">
+            <thead>
+            <tr>
+                <td id="lotto-quotes__extra-game-table___correct-number">Number of correct characters</td>
+                <td id="lotto-quotes__extra-game-table___winners-counts">Number of winners</td>
+                <td id="lotto-quotes__extra-game-table___profits">Prize (CHF)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="correct-number">E 9 2 9 L </td>
+                <td>0</td>
+                <td>0.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 _ 9 L </td>
+                <td>1</td>
+                <td>9&#39;040.95</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 2 _ L / E _ 2 9 L </td>
+                <td>6</td>
+                <td>1&#39;255.70</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 2 9 _ / _ 9 2 9 L </td>
+                <td>15</td>
+                <td>703.20</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 _ _ L / E _ _ 9 L </td>
+                <td>27</td>
+                <td>334.85</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 2 _ _ / _ _ 2 9 L </td>
+                <td>94</td>
+                <td>52.15</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E _ _ _ L </td>
+                <td>173</td>
+                <td>19.65</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E 9 _ _ _ / _ _ _ 9 L </td>
+                <td>941</td>
+                <td>10.40</td>
+            </tr>
+            <tr>
+                <td class="correct-number">E _ _ _ _ / _ _ _ _ L </td>
+                <td>9&#39;064</td>
+                <td>4.15</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="quotes__game-jackpot">
+            <tr class="quotes__game-jackpot-row">
+                <th class="quotes__game-jackpot-label">Expected main prize:</th>
+                <td class="quotes__game-jackpot-value">CHF 250&#39;000</td>
+            </tr>
+        </table></div>
+</body></html>

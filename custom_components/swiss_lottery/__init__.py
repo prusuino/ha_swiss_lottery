@@ -7,7 +7,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
-from .const import DOMAIN
+from .const import CONF_GAME, DOMAIN
 from .coordinator import DATA_ENTRIES, SwisslosCoordinator, get_coordinator, release_coordinator
 
 # Every game entry shares the one coordinator; runtime_data points at it.
@@ -21,10 +21,9 @@ PLATFORMS = ["binary_sensor", "sensor"]
 
 async def async_setup_entry(hass: HomeAssistant, entry: SwissLotteryConfigEntry) -> bool:
     coordinator = get_coordinator(hass)
-    if coordinator.data is None:
-        await coordinator.async_refresh()
-        if not coordinator.last_update_success:
-            raise ConfigEntryNotReady(str(coordinator.last_exception))
+    # A game added later is not part of what the coordinator has loaded so far.
+    if not await coordinator.async_ensure_game(entry.data[CONF_GAME]):
+        raise ConfigEntryNotReady(str(coordinator.last_exception))
     hass.data[DOMAIN][DATA_ENTRIES].add(entry.entry_id)
     entry.runtime_data = coordinator
 

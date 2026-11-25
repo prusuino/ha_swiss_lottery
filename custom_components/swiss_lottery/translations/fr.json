@@ -125,7 +125,7 @@
     },
     "page_changed": {
       "title": "Swiss Lottery : page swisslos.ch incomprise",
-      "description": "La page des résultats de swisslos.ch n'a pas pu être lue lors de plusieurs actualisations consécutives ({error}). Swisslos a probablement modifié la page ; l'intégration a besoin d'une mise à jour pour suivre. Les entités de tirage conservent leurs dernières valeurs jusque-là. Vérifie dans le Marketplace s'il existe une version plus récente de Swiss Lottery ou signale le problème sur GitHub ; cet avis disparaît à la prochaine actualisation réussie."
+      "description": "La page des résultats de swisslos.ch n'a pas pu être lue lors de plusieurs actualisations consécutives ({error}). Swisslos a probablement modifié la page ; l'intégration a besoin d'une mise à jour pour suivre. Les entités de tirage sont indisponibles jusque-là. Vérifie dans le Marketplace s'il existe une version plus récente de Swiss Lottery ou signale le problème sur GitHub ; cet avis disparaît à la prochaine actualisation réussie."
     }
   }
 }

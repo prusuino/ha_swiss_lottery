@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en"><body>
+<app-header locale="en" game-product-key="swisslotto" winning-numbers="{&quot;swissLotto&quot;:{&quot;deadline&quot;:&quot;2026-11-25T18:00:00Z&quot;,&quot;jackpot&quot;:150000000,&quot;lastDrawingDate&quot;:&quot;2026-11-21T16:30:00Z&quot;,&quot;numbers&quot;:[14,21,22,29,31,32],&quot;luckyNumber&quot;:3,&quot;replayNumber&quot;:3,&quot;joker&quot;:&quot;78319&quot;},&quot;euroMillions&quot;:{&quot;deadline&quot;:&quot;2026-11-27T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-24T20:00:00Z&quot;,&quot;jackpot&quot;:5400000000,&quot;numbers&quot;:[3,5,37,44,49],&quot;stars&quot;:[5,6],&quot;secondChanceNumbers&quot;:[1,13,14,18,48],&quot;superstar&quot;:&quot;E929L&quot;,&quot;swissWinCodes&quot;:[],&quot;extraMillionsCodes&quot;:[]},&quot;euroDreams&quot;:{&quot;deadline&quot;:&quot;2026-11-26T18:30:00Z&quot;,&quot;lastDrawingDate&quot;:&quot;2026-11-23T20:00:00Z&quot;,&quot;jackpot&quot;:5000000,&quot;numbers&quot;:[2,7,8,9,16,24],&quot;dreamNumber&quot;:1}}"></app-header>
+<div class="cockpit__jackpot"><div class="jackpot___value cf" data-jackpot-game="swiss_lotto" data-jackpot="1500000">
+        </div><div class="cockpit__jackpot___next-pick">
+        <span class="cockpit__jackpot___next-pick-info">Closing time next draw</span>
+        <span class="cockpit__jackpot___next-pick-time">
+            <span class="date">Wed, 25.11.2026</span>
+            <span class="time">19:00</span>
+        </span>
+    </div></div>
+<div class="filter">
+        <form class="filter__form"
+              data-statistics-game="swisslotto" data-statistics-name="quotes" id="swissLottoStatisticsQuotesForm"
+              method="post" action="/en/swisslotto/information/winning-numbers/winning-numbers.html">
+            <label>
+                <span>Date of draw</span><br/>
+                <div class="flatpickr js-datepicker-wrapper"
+                     data-custom-class="lotto-draw-days"
+                     data-disabled-week-days="[0,1,2,4,5]"
+                     data-highlight-week-days="[3,6]"
+                     data-min-date="04.01.2006" data-max-date="25.11.2026">
+                    <input class="js-datepicker-input hasDatepicker" data-id="altinput" data-input
+                           name="formattedFilterDate"
+                           type="text" id="formattedFilterDate" value="21.11.2026">
+                    <input name="filterDate" type="hidden" value="">
+                    <input name="currentDate" type="hidden" id="currentDate" value="25.11.2026"/>
+                    <button class="js-datepicker-trigger" data-toggle type="button"></button>
+                </div>
+            </label>
+            <button class="filter-next-draw button__secondary" name="showNextDraw"
+                    value="true" disabled="disabled">Next draw</button>
+            <button class="filter-prev-draw button__secondary" name="showPrevDraw"
+                    value="true">Previous draw</button>
+        </form></div>
+<h2>Winning numbers &amp; odds</h2>
+<div class="filter-results">
+        <div class="quotes__game">
+            <div class="swiss-lotto-logo">
+                <img alt="Swiss Lotto Logo" height="46px" src="/assets/images/logo/swiss_lotto_logo.png" width="149px">
+            </div>
+            <div class="actual-numbers___body">
+                <ul class="actual-numbers__numbers">
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">14</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">21</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">22</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">29</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">31</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___normal">
+                        <span class="transform__center">32</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___lucky">
+                        <span class="transform__center">3</span></li>
+                    <li class="actual-numbers__number actual-numbers__number___replay">
+                        <span class="transform__center">3</span></li>
+                </ul>
+            </div>
+        </div>
+        <table class="quotes__game-table">
+            <thead>
+            <tr>
+                <td id="lotto-quotes__game-table___correct-number">Number of correct numbers</td>
+                <td id="lotto-quotes__game-table___winners-counts">Number of winners</td>
+                <td id="lotto-quotes__game-table___profits">Prize (CHF)</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="correct-number">6 + 1</td>
+                <td>1</td>
+                <td>47&#39;139&#39;443.95</td>
+            </tr>
+            <tr>
+                <td class="correct-number">6</td>
+                <td>2</td>
+                <td>500&#39;000.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">5 + 1</td>
+                <td>12</td>
+                <td>11&#39;115.45</td>
+            </tr>
+            <tr>
+                <td class="correct-number">5</td>
+                <td>74</td>
+                <td>1&#39;000.00</td>
+            </tr>
+            <tr>
+                <td class="correct-number">4 + 1</td>
+                <td>844</td>
+                <td>117.30</td>
+            </tr>
+            <tr>
+                <td class="correct-number">4</td>
+                <td>3&#39;577</td>
+                <td>71.85</td>
+            </tr>
+            <tr>
+                <td class="correct-number">3 + 1</td>
+                <td>13&#39;140</td>
+                <td>18.95</td>
+            </tr>
+            <tr>
+                <td class="correct-number">3</td>
+                <td>56&#39;394</td>
+                <td>9.40</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="quotes__game-jackpot">
+            <tr class="quotes__game-jackpot-row">
+                <th class="quotes__game-jackpot-label">Jackpot next draw:</th>
+                <td class="quotes__game-jackpot-value">CHF 1&#39;500&#39;000</td>
+            </tr>
+        </table>
+            <div class="quotes__extra-game">
+                <div class="joker-logo">
+                    <img alt="Joker Logo" height="46px" src="/assets/images/logo/joker_logo.png" width="107px">
+                </div>
+                <div class="actual-numbers__extra-game___number">
+                    <div class="transform__center">078319</div>
+                </div>
+            </div>
+            <table class="quotes__extra-game-table">
+                <thead>
+                <tr>
+                    <td id="lotto-quotes__extra-game-table___correct-number">Number of correct last digits</td>
+                    <td id="lotto-quotes__extra-game-table___winners-counts">Number of winners</td>
+                    <td id="lotto-quotes__extra-game-table___profits">Prize (CHF)</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="correct-number">6</td>
+                    <td>0</td>
+                    <td>0.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number">5</td>
+                    <td>1</td>
+                    <td>10&#39;000.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number">4</td>
+                    <td>19</td>
+                    <td>1&#39;000.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number">3</td>
+                    <td>198</td>
+                    <td>100.00</td>
+                </tr>
+                <tr>
+                    <td class="correct-number">2</td>
+                    <td>2&#39;034</td>
+                    <td>10.00</td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="quotes__game-jackpot">
+                <tr class="quotes__game-jackpot-row">
+                    <th class="quotes__game-jackpot-label">Jackpot next draw:</th>
+                    <td class="quotes__game-jackpot-value">CHF 870&#39;000</td>
+                </tr>
+            </table></div>
+</body></html>

@@ -6,9 +6,9 @@ Only the latest release is supported. Please update to the latest version before
 
 ## Reporting a Vulnerability
 
-This integration only reads one public web page over HTTPS. It has no write access to any external system and uses no credentials.
+This integration only reads public web pages over HTTPS, one per game. It has no write access to any external system and uses no credentials.
 
-**What it sends:** once an hour (and once when a game is added), a plain GET request for `https://www.swisslos.ch/en/swisslotto/information/winning-numbers/winning-numbers.html` with an `Accept-Language: en` header – nothing else. No account, no cookies, no identifiers, and nothing about you or your tickets. Your tickets are stored with the config entry in Home Assistant's `.storage` and are compared with the published numbers on your own machine.
+**What it sends:** once an hour (and once when a game is added), a plain GET request per game you added for `https://www.swisslos.ch/en/<game>/information/winning-numbers/winning-numbers.html`, where `<game>` is `swisslotto`, `euromillions` or `eurodreams`, with an `Accept-Language: en` header – nothing else. No account, no cookies, no identifiers, and nothing about you or your tickets. Your tickets are stored with the config entry in Home Assistant's `.storage` and are compared with the published numbers on your own machine.
 
 **Parsing:** the page is parsed with the Python standard library (`html.parser`) into a small element tree that is queried by CSS class; numbers are converted with strict patterns, and anything that does not match the expected structure makes the entities unavailable. Nothing from the page is executed, rendered as HTML, or written to disk. Text that reaches a dashboard (the extra-game code, prize texts) is escaped by the bundled card before it is inserted into the page.
 
